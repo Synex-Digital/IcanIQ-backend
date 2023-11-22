@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\ClassModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,11 @@ use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
+
+    function class_edit($id){
+        $class = ClassModel::find($id);
+        return $class;
+    }
     function admin_register(){
         $admin = Admin::count();
         if ($admin != 0) {
@@ -20,7 +26,8 @@ class AdminController extends Controller
         }
     }
     function admin_login(){
-        return view('backend.layouts.admin_login');
+        $admin = Admin::count();
+        return view('backend.layouts.admin_login', compact('admin'));
     }
     function admin_store(Request $request){
         $validated = $request->validate([
@@ -51,7 +58,22 @@ class AdminController extends Controller
         }
     }
 
+    function login_admin(Request $request){
+        $request->validate([
+            'email' => 'required|max:255',
+            'password' => 'required|min:8',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('dashboard');
+        } else {
+            return back()->with('err', 'Email & Password Are Not Valid...');
+        }
+    }
+
     function dashboard(){
-        return 'dashboard';
+       return view('backend.home.dashboard');
     }
 }

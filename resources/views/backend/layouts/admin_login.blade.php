@@ -44,22 +44,36 @@
 										<a href=""><img src="{{ asset('backend') }}/images/logo-full-dark.png" alt="/"></a>
 									</div>
                                     <h4 class="text-center mb-4">Sign in your account</h4>
-                                    <form action="">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" class="form-control" placeholder="username" name="name">
-                                        </div>
+                                    <form action="{{ route('login.admin') }}" method="POST">
+                                        @csrf
                                         <div class="form-group mb-3">
                                             <label class="form-label">Email</label>
-                                            <input type="email" class="form-control" placeholder="hello@example.com" name="email">
+                                            <input type="email" class="form-control" placeholder="hello@example.com" name="email" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Password</label>
+											<div class="position-relative">
+												<input type="password" id="dz-password" class="form-control @error('password') is-invalid @enderror" value="" name="password" placeholder="Entire Password" required>
+												<span class="show-pass eye">
+													<i class="fa fa-eye-slash"></i>
+													<i class="fa fa-eye"></i>
+												</span>
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+											</div>
                                         </div>
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                         </div>
                                     </form>
-                                    <div class="new-account mt-3">
-                                        <p class="">Create An Account <a class="text-primary" href="{{ route('admin.register') }}">Sign Up</a></p>
-                                    </div>
+                                    @if($admin == 0)
+                                        <div class="new-account mt-3">
+                                            <p class="">Create An Account <a class="text-primary" href="{{ route('admin.register') }}">Sign Up</a></p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
