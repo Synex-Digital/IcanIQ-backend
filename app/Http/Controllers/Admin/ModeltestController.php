@@ -16,7 +16,8 @@ class ModeltestController extends Controller
     public function index()
     {
         $classes = ClassModel::all();
-        return view('backend.model_test.index', compact('classes'));
+        $requests = Modeltest::all();
+        return view('backend.model_test.index', compact('classes', 'requests'));
     }
 
     /**
@@ -34,12 +35,14 @@ class ModeltestController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'duration' => 'required|numeric',
+            'start_time' => 'required',
+            'end_time' => 'required',
         ]);
         Modeltest::insert([
             'class_id' => $request->class_id,
             'title' => $request->title,
-            'duration' => $request->duration,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
             'note' => $request->note,
             'status' => $request->status,
             'created_at' => Carbon::now(),
@@ -60,7 +63,8 @@ class ModeltestController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $modeltest = Modeltest::find($id);
+        return $modeltest;
     }
 
     /**
@@ -68,7 +72,22 @@ class ModeltestController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ]);
+        $modeltest = Modeltest::where('id', $request->id);
+        $modeltest->update([
+            'class_id' => $request->class_id,
+            'title' => $request->title,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'note' => $request->note,
+            'status' => $request->status,
+            'updated_at' => Carbon::now(),
+        ]);
+        return back()->with('succ', 'Model Test Updated...');
     }
 
     /**
@@ -76,6 +95,8 @@ class ModeltestController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $modeltest = Modeltest::find($id);
+        $modeltest->delete();
+        return back()->with('succ', 'Class Deleted...');
     }
 }

@@ -13,6 +13,7 @@
                 <div class="modal-body">
                     <form action="{{ route('modeltest.store') }}" method="POST">
                         @csrf
+                        @if ($classes)
                         <div class="form-group mb-3">
                             <label class="form-label">Select Class</label>
                             <select class="default-select  form-control wide" name="class_id">
@@ -21,13 +22,18 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endif
                         <div class="form-group mb-3">
                             <label class="form-label">Title</label>
                             <input type="text" class="form-control" name="title" placeholder="Model Test Title">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="form-label">Duration</label>
-                            <input class="form-control clockpicker" type="text" id="timepicker">
+                            <label class="form-label">Exam Start</label>
+                            <input class="form-control" type="time" name="start_time" id="">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Exam End</label>
+                            <input class="form-control" type="time" name="end_time" id="">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label">Write Note</label>
@@ -56,18 +62,40 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Class</h5>
+                    <h5 class="modal-title">Edit Model Test</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('class.update', 'id') }}" method="POST">
+                    <form action="{{ route('modeltest.update', 'id') }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="id" id="id" value="">
+                        <input type="hidden" name="id" id="id">
+                        @if ($classes)
                         <div class="form-group mb-3">
-                            <label class="form-label">Class Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Class Name">
+                            <label class="form-label">Select Class</label>
+                            <select class="default-select  form-control wide" name="class_id">
+                                @foreach ($classes as $class)
+                                 <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
+                        <div class="form-group mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Model Test Title">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Exam Start</label>
+                            <input class="form-control" type="time" name="start_time" id="start_time" value="asdf">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Exam End</label>
+                            <input class="form-control" type="time" name="end_time" id="end_time">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Write Note</label>
+                            <textarea class="form-control" name="note" id="note" cols="10" rows="5" placeholder="Write Note For This Model Test"></textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label">Status</label>
@@ -116,19 +144,25 @@
                             <thead>
                                 <tr>
                                     <th>Class</th>
+                                    <th>Title</th>
+                                    <th>Exam Start</th>
+                                    <th>Exam End</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($requests as $request)
+                                @foreach ($requests as $request)
                                 <tr>
-                                    <td>{{ $request->class_name }}</td>
+                                    <td>{{ $request->class->class_name }}</td>
+                                    <td>{{ $request->title }}</td>
+                                    <td>{{ $request->start_time }}</td>
+                                    <td>{{ $request->end_time }}</td>
                                     <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }}</td>
                                     <td>
                                         <div class="d-flex">
                                             <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn" value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
-                                            <form action="{{ route('class.destroy', $request->id) }}" method="POST">
+                                            <form action="{{ route('modeltest.destroy', $request->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></button>
@@ -136,8 +170,7 @@
                                         </div>												
                                     </td>												
                                 </tr>
-                                @endforeach --}}
-                                
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -147,7 +180,7 @@
     </div>
 </div>
 @endsection
-{{-- @section('script')
+@section('script')
     <script>
         $(document).ready(function(){
             $(document).on('click', '.editbtn', function(){
@@ -156,14 +189,17 @@
 
                $.ajax({
                 type: "GET",
-                url: "/class/"+class_id+"/edit",
+                url: "/modeltest/"+class_id+"/edit",
                 success: function(response){
-                    // console.log(response);
-                    $('#name').val(response.class_name);
+                    console.log(response);
+                    $('#title').val(response.title);
+                    $('#start_time').val(response.start_time);
+                    $('#end_time').val(response.end_time);
+                    $('#note').val(response.note);
                     $('#id').val(response.id);
                 }
                });
             })
         })
     </script>
-@endsection --}}
+@endsection
