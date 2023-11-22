@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\ModeltestController;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +28,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/admin/register', [AdminController::class, 'admin_register'])->name('admin.register');
-Route::get('/admin/login', [AdminController::class, 'admin_login'])->name('admin.login');
 Route::post('/admin/store', [AdminController::class, 'admin_store'])->name('admin.store');
+Route::get('/admin/login', [AdminController::class, 'admin_login'])->name('admin.login');
+Route::post('/login/admin', [AdminController::class, 'login_admin'])->name('login.admin');
 
 
 Route::middleware('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('class', ClassController::class);
+    Route::resource('modeltest', ModeltestController::class);
 });
