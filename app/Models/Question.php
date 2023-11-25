@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Modeltest extends Model
+class Question extends Model
 {
     use HasFactory;
-    function class(){
-        return $this->belongsTo(ClassModel::class, 'class_id');
+    function modeltest(){
+        return $this->belongsTo(Modeltest::class, 'test_id');
     }
 }

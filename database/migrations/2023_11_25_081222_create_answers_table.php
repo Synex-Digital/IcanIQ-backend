@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modeltests', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->integer('class_id');
-            $table->string('title');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->longText('note')->nullable();
-            $table->integer('status');
+            $table->integer('student_id');
+            $table->integer('question_id');
+            $table->integer('choice_id');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modeltests');
+        Schema::dropIfExists('answers');
     }
 };
