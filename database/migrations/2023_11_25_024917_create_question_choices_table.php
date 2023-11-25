@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('question_choices', function (Blueprint $table) {
             $table->id();
-            $table->integer('test_id');
-            $table->string('question_test');
-            $table->boolean('required')->unsigned()->nullable();
-            $table->integer('status');
+            $table->bigInteger('question_id');
+            $table->string('choice_text');
+            $table->boolean('is_correct')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('question_choices');
     }
 };

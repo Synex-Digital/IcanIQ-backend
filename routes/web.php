@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AnswerController;
 use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\GetAnswerController;
 use App\Http\Controllers\Admin\ModeltestController;
+use App\Http\Controllers\Admin\QuestionChoiceController;
+use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +42,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('class', ClassController::class);
     Route::resource('modeltest', ModeltestController::class);
+    Route::resource('question', QuestionController::class);
+    Route::resource('student', StudentController::class);
+    Route::resource('/questionchoice', QuestionChoiceController::class);
+    Route::resource('answer', AnswerController::class);
+    Route::get('/getanswer/{id}', [GetAnswerController::class, 'getanswer'])->name('getanswer');
 });
