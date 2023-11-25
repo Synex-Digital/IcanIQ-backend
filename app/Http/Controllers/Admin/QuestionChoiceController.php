@@ -42,13 +42,20 @@ class QuestionChoiceController extends Controller
         else{
             $is_correct = false;
         }
-        QuestionChoice::insert([
-            'question_id' => $request->question_id,
-            'choice_text' => $request->choice_text,
-            'is_correct' => $is_correct,
-            'created_at' => Carbon::now(),
-        ]);
-        return back()->with('succ', 'Answered Option Added...');
+        $question_choice_count = QuestionChoice::where('question_id', $request->question_id)->count();
+        $question_correct_count = QuestionChoice::where('question_id', $request->question_id)->where('is_correct', 1)->count();
+        return $question_correct_count;
+        if ($question_choice_count < 4 && $question_correct_count ==1) {
+            QuestionChoice::insert([
+                'question_id' => $request->question_id,
+                'choice_text' => $request->choice_text,
+                'is_correct' => $is_correct,
+                'created_at' => Carbon::now(),
+            ]);
+            return back()->with('succ', 'Answered Option Added...');
+        }
+        return back()->with('err', 'You can set four option only.');
+        
     }
 
     /**
@@ -56,7 +63,10 @@ class QuestionChoiceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $question  = Question::find($id);
+        $questions = Question::all();
+        $requests = QuestionChoice::where('question_id', $id)->get();
+        return view('backend.question_choice.index', compact('questions', 'requests', 'question'));
     }
 
     /**

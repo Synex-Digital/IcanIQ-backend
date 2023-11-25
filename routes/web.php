@@ -46,5 +46,5 @@ Route::middleware('admin')->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('/questionchoice', QuestionChoiceController::class);
     Route::resource('answer', AnswerController::class);
-    Route::get('/getanswer/{id}', [GetAnswerController::class, 'getanswer'])->name('getanswer');
+    Route::post('/getanswer', [GetAnswerController::class, 'getanswer'])->name('getanswer');
 });

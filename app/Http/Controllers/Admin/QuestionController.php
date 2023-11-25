@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Modeltest;
 use App\Models\Question;
+use App\Models\QuestionChoice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -112,7 +113,7 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        Question::find($id)->delete();
+        QuestionChoice::find($id)->delete();
         return back()->with('succ', 'Question Deleted...');
     }
 }

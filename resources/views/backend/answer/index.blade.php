@@ -15,18 +15,22 @@
                         @csrf
                         <div class="form-group mb-3">
                             <label class="form-label">Select Question</label>
-                            <select class="default-select  form-control wide questionclick" name="question_id">
+                            <select class="default-select  form-control wide questionclick question" name="question_id">
                                 @foreach ($questions as $questions)
                                 <option value="{{ $questions->id }}">{{ $questions->question_test }}</option>
                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            {{-- <label class="form-label">Select Answer</label>
-                            <select class="default-select  form-control wide" name="options"> --}}
-                               
+                            <label class="form-label">Select Question</label>
+                            <select class="default-select  form-control wide option" name="question_id">
+                                <option value="">Select A Question</option>
+                                <option value="">Select A Question</option>
+                                @foreach ($answers as $answer)
+                                <option value="{{ $answer->id }}">aaa</option>
+                               @endforeach
                             </select>
-                            <div class="mb-3 mb-0 ">
+                            {{-- <div class="mb-3 mb-0 ">
                                 <div class="form-check ">
                                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
                                   <label class="form-check-label" for="flexRadioDefault3">
@@ -39,7 +43,7 @@
                                      Option 3
                                   </label>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -154,7 +158,7 @@
 @endsection
 @section('script')
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $("document").ready(function () {
         $('select[name="question_id"]').on('change', function () {
             var qId = $(this).val();
@@ -165,10 +169,11 @@
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
+                        alert(data);
                         console.log(data);
                         $('select[name="options"]').empty();
                         $.each(data, function (key, value) {
-                            $('select[name="options"]').append('<option value=" ' + key + '">' + value + '</option>');
+                            $('select[name="options"]').append('<option value=" ' + key + '">' + data.question_id  + '</option>');
                         })
                     }
 
@@ -179,6 +184,25 @@
         });
 
 
+    });
+</script> --}}
+<script>
+    $('.question').change(function(){
+        var question_id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type:'POST',
+            url:'/getanswer',
+            data:{'question_id' : question_id},
+            success:function(data){
+                $('.option').html(data);
+            }
+        });
     });
 </script>
 @endsection
