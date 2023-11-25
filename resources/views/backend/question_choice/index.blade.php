@@ -13,13 +13,9 @@
                 <div class="modal-body">
                     <form action="{{ route('questionchoice.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="question_id" value="{{ $question->id }}">
                         <div class="form-group mb-3">
-                            <label class="form-label">Select Question</label>
-                            <select class="default-select  form-control wide" name="question_id">
-                                @foreach ($questions as $questions)
-                                <option value="{{ $questions->id }}">{{ $questions->question_test }}</option>
-                               @endforeach
-                            </select>
+                            <input type="text" class="form-control" name="choice_text" placeholder="Write Question Here.." value="{{ $question->question_test }}" readonly>
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label">Set Option For Choice</label>
@@ -110,7 +106,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">All Choiced Question List</h4>
+                    <h4 class="card-title">{{ $question->question_test }}</h4>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addclassmodal">+Question Choice</button>
                 </div>
                 <div class="card-body">
@@ -118,7 +114,6 @@
                         <table id="example3" class="display" style="min-width: 850px">
                             <thead>
                                 <tr>
-                                    <th>Question</th>
                                     <th>Question's Option</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -127,7 +122,6 @@
                             <tbody>
                                 @foreach ($requests as $request)
                                 <tr>
-                                    <td>{{ $request->question->question_test }}</td>
                                     <td>{{ $request->choice_text }}</td>
                                     <td> <div class="d-flex align-items-center"><i class="fa fa-circle text-{{ $request->is_correct != 0 ? 'success':'warning' }} mr-1"></i> {{ $request->is_correct != 0 ? 'Right':'Wrong' }}</div></td>
                                     <td>

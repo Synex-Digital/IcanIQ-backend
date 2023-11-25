@@ -22,6 +22,7 @@
 
 	<!-- Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend') }}/images/favicon.png">
 	<link rel="stylesheet" href="{{ asset('backend') }}/vendor/chartist/css/chartist.min.css">

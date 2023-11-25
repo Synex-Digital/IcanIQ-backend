@@ -16,7 +16,8 @@ class AnswerController extends Controller
     {
         $questions = Question::all();
         $requests = Answer::all();
-        return view('backend.answer.index', compact('requests', 'questions'));
+        $answers = Answer::all();
+        return view('backend.answer.index', compact('requests', 'questions', 'answers'));
     }
 
     /**

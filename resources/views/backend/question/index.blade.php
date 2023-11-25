@@ -162,7 +162,8 @@
                                     <td> <div class="d-flex align-items-center"><i class="fa fa-circle text-{{ $request->status != 0 ? 'success':'warning' }} mr-1"></i> {{ $request->status != 0 ? 'Active':'Deactive' }}</div></td>
                                     <td>
                                         <div class="d-flex">
-                                            <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn" value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
+                                            <a href="{{ route('questionchoice.show', $request->id) }}" class="btn btn-success shadow btn-xs sharp me-1" value="{{ $request->id }}"><i class="fa fa-eye"></i></a>
+                                            <button class="btn btn-warning shadow btn-xs sharp me-1 editbtn" value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
                                             <form action="{{ route('question.destroy', $request->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')

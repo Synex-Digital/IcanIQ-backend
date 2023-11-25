@@ -50,14 +50,14 @@
                     <li><a href="{{ route('question.index') }}">Question List</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            {{-- <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-internet"></i>
                     <span class="nav-text">Question Choice</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('questionchoice.index') }}">Answer</a></li>
                 </ul>
-            </li>
+            </li> --}}
             <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-heart"></i>
                     <span class="nav-text">Answer</span>
