@@ -35,14 +35,14 @@ class QuestionChoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'name' => 'Synex Digital',
-            'link' => 'https://synexdigital.com',
-        ];
-        Mail::to('email@gmail.com')->send(new MailMarketing($data, 'Synex Digital'));
-        return back();
-        die();
-        dd($request->all());
+        // $data = [
+        //     'name' => 'Synex Digital',
+        //     'link' => 'https://synexdigital.com',
+        // ];
+        // Mail::to('email@gmail.com')->send(new MailMarketing($data, 'Synex Digital'));
+        // return back();
+        // die();
+        // dd($request->all());
         $request->validate([
             'choice_text' => 'required|max:255',
         ]);

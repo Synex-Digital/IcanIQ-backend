@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Modeltest extends Model
 {
     use HasFactory;
-    function class(){
+
+    function class()
+    {
         return $this->belongsTo(ClassModel::class, 'class_id');
     }
 }
