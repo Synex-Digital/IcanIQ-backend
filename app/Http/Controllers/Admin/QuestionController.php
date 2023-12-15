@@ -39,14 +39,12 @@ class QuestionController extends Controller
         ]);
         if ($request->required) {
             $required = true;
-        } 
-        else{
+        } else {
             $required = false;
         }
         if ($request->status) {
             $status = '1';
-        } 
-        else{
+        } else {
             $status = '0';
         }
 
@@ -87,14 +85,12 @@ class QuestionController extends Controller
         ]);
         if ($request->required) {
             $required = true;
-        } 
-        else{
+        } else {
             $required = false;
         }
         if ($request->status) {
             $status = '1';
-        } 
-        else{
+        } else {
             $status = '0';
         }
 

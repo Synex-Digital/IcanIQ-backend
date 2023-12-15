@@ -26,7 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -43,7 +43,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('modeltest', ModeltestController::class);
     Route::resource('question', QuestionController::class);
     Route::resource('student', StudentController::class);
-    Route::resource('/questionchoice', QuestionChoiceController::class);
+    Route::resource('questionchoice', QuestionChoiceController::class);
     Route::resource('answer', AnswerController::class);
     Route::post('/getanswer', [GetAnswerController::class, 'getanswer'])->name('getanswer');
 });

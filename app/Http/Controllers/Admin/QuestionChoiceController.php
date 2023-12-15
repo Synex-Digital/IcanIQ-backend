@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailMarketing;
 use App\Models\Question;
 use App\Models\QuestionChoice;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class QuestionChoiceController extends Controller
@@ -33,19 +35,28 @@ class QuestionChoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $data = [
+            'name' => 'Synex Digital',
+            'link' => 'https://synexdigital.com',
+        ];
+        Mail::to('email@gmail.com')->send(new MailMarketing($data, 'Synex Digital'));
+        return back();
+        die();
+        dd($request->all());
         $request->validate([
             'choice_text' => 'required|max:255',
         ]);
         if ($request->is_correct) {
             $is_correct = true;
-        }
-        else{
+        } else {
             $is_correct = false;
         }
         $question_choice_count = QuestionChoice::where('question_id', $request->question_id)->count();
         $question_correct_count = QuestionChoice::where('question_id', $request->question_id)->where('is_correct', 1)->count();
-        return $question_correct_count;
-        if ($question_choice_count < 4 && $question_correct_count ==1) {
+        if ($question_choice_count < 4) {
+            if ($question_correct_count == 1 && $is_correct) {
+                return back();
+            }
             QuestionChoice::insert([
                 'question_id' => $request->question_id,
                 'choice_text' => $request->choice_text,
@@ -55,7 +66,6 @@ class QuestionChoiceController extends Controller
             return back()->with('succ', 'Answered Option Added...');
         }
         return back()->with('err', 'You can set four option only.');
-        
     }
 
     /**
@@ -88,8 +98,7 @@ class QuestionChoiceController extends Controller
         ]);
         if ($request->is_correct) {
             $is_correct = true;
-        }
-        else{
+        } else {
             $is_correct = false;
         }
         QuestionChoice::where('id', $request->id)->update([

@@ -13,7 +13,10 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            's' => 'f',
+        ]);
+        // dd('data');
     }
 
     /**
