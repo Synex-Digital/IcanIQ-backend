@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AnswerController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\Admin\GetAnswerController;
 use App\Http\Controllers\Admin\ModeltestController;
+use App\Http\Controllers\Admin\PanelUserController;
 use App\Http\Controllers\Admin\QuestionChoiceController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentController;
@@ -42,5 +43,6 @@ Route::middleware('admin')->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('questionchoice', QuestionChoiceController::class);
     Route::resource('answer', AnswerController::class);
+    Route::resource('panel-user', PanelUserController::class);
     Route::post('/getanswer', [GetAnswerController::class, 'getanswer'])->name('getanswer');
 });

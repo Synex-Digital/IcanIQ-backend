@@ -10,6 +10,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('panel-user.index') }}">Panel Users</a></li>
                 </ul>
             </li>
             <li><a href="{{ route('student.index') }}">
