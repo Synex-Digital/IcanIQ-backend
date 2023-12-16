@@ -33,6 +33,7 @@ class ModeltestController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'title' => 'required|max:255',
             'start_time' => 'required',

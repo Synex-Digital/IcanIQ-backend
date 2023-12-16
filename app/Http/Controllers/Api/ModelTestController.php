@@ -12,6 +12,7 @@ class ModelTestController extends Controller
         $modelTest = Modeltest::where('status', 1)->get();
         return response()->json([
             'status' => 1,
+            'total' => $modelTest->count(),
             'modelTest' => $modelTest,
         ], 200);
     }

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\Student;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Photo;
 
 class StudentController extends Controller
 {
@@ -17,7 +19,7 @@ class StudentController extends Controller
     public function index()
     {
         $classes = ClassModel::all();
-        $requests = Student::all();
+        $requests = User::all();
         return view('backend.student.index', compact('classes', 'requests'));
     }
 
@@ -34,23 +36,29 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'number' => 'required|min:11|numeric',
-            'profile' => 'required',
-            'password' => 'required|min:8',
+            'name'      => 'required|max:255',
+            'email'     => 'required|email',
+            'number'    => 'required|min:11|numeric',
+            'password'  => 'required|min:8',
         ]);
+
         $image = $request->profile;
-        $image_name = $request->name.rand(1000,10).'.'.$image->extension();
-        Image::make($image)->save(base_path('public/files/student/' . $image_name));
-        Student::insert([
-            'class_id' => $request->class_id,
-            'name' => $request->name,
-            'number' => $request->number,
-            'password' => bcrypt($request->password),
-            'profile' => $image_name,
-            'status' => $request->status,
-            'created_at' =>Carbon::now(),
+        $image_name = null;
+        if ($request->has('profile')) {
+            Photo::upload($image, 'files/student', 'Student', ['500', '500']);
+            $image_name = Photo::$name;
+        }
+
+        User::insert([
+            // 'class_id' => $request->class_id,
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'number'        => $request->number,
+            'profile'       => $image_name,
+            'password'      => bcrypt($request->password),
+            'created_at'    => Carbon::now(),
         ]);
         return back()->with('succ', 'Student Added...');
     }
@@ -63,44 +71,38 @@ class StudentController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $student = Student::find($id);
+        $student = User::find($id);
         return $student;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'number' => 'required|min:11|numeric',
+            'name'      => 'required|max:255',
+            'email'     => 'required|email',
+            'number'    => 'required|min:11|numeric',
         ]);
-        $student = Student::where('id', $request->id)->first();
-        if ($request->profile) {
-            $old_image = $student->profile;
-            $old_image_path = base_path('public/files/student/' . $old_image);
-            unlink($old_image_path);
+        $student = User::where('id', $request->id)->first();
+        if ($request->has('profile')) {
+            if ($student->profile != null) {
+                Photo::delete('files/student/', $student->profile);
+            }
             $image = $request->profile;
-            $image_name = $request->name.rand(1000,10).'.'.$image->extension();
-            Image::make($image)->save(base_path('public/files/student/' . $image_name));
-        }
-        else{
+            Photo::upload($image, 'files/student', 'Student', ['500', '500']);
+            $image_name = Photo::$name;
+        } else {
             $image_name = $student->profile;
         }
-        Student::where('id', $request->id)->update([
-            'class_id' => $request->class_id,
-            'name' => $request->name,
-            'number' => $request->number,
-            'password' => bcrypt($request->password),
-            'profile' => $image_name,
-            'status' => $request->status,
-            'created_at' =>Carbon::now(),
+        User::where('id', $request->id)->update([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'number'        => $request->number,
+            'password'      => bcrypt($request->password),
+            'profile'       => $image_name,
+            'status'        => $request->status,
+            'created_at'    => Carbon::now(),
         ]);
         return back()->with('succ', 'Student Updated...');
     }
@@ -110,11 +112,14 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $student = Student::find($id)->first();
-        $old_image = $student->profile;
-            $old_image_path = base_path('public/files/student/' . $old_image);
-            unlink($old_image_path);
-            ClassModel::find($id)->delete();
+        // dd($id);
+        $student = User::find($id);
+        // Photo::upload($request->thumbnail, 'uploads/blog', 'BLOG', ['700', '500']);
+        if ($student->profile != null) {
+            Photo::delete('files/student/', $student->profile);
+        }
+
+        User::find($id)->delete();
         return back()->with('succ', 'Student Deleted...');
     }
 }

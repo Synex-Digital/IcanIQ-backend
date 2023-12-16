@@ -19,6 +19,6 @@ class AdminMiddleware
         if (Auth::guard('admin')->check()) {
             return $next($request);
         }
-        return redirect()->back()->with('err', 'You are not admin');
+        return abort(404);
     }
 }

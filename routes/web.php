@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ModeltestController;
 use App\Http\Controllers\Admin\QuestionChoiceController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,20 +22,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/admin/register', [AdminController::class, 'admin_register'])->name('admin.register');
 Route::post('/admin/store', [AdminController::class, 'admin_store'])->name('admin.store');
 Route::get('/admin/login', [AdminController::class, 'admin_login'])->name('admin.login');
 Route::post('/login/admin', [AdminController::class, 'login_admin'])->name('login.admin');
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
 Route::middleware('admin')->group(function () {

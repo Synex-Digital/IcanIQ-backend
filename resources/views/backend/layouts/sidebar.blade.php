@@ -9,41 +9,30 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="index.html">Dashboard</a></li>
-                    <li><a href="orders.html">Orders</a></li>
-                    <li><a href="order-id.html">Order ID</a></li>
-                    <li><a href="general-customers.html">General Customers</a></li>
-                    <li><a href="analytics.html">Analytics</a></li>
-                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            <li><a href="{{ route('student.index') }}">
                     <i class="flaticon-381-database-1"></i>
                     <span class="nav-text">Student
                         {{-- <span class="badge badge-sm badge-danger ms-3">New</span> --}}
                     </span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('student.index') }}">All Students List</a></li>
-                </ul>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            {{-- <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-television"></i>
                     <span class="nav-text">Class</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('class.index') }}">All Classes</a></li>
                 </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            </li> --}}
+            <li><a class="ai-icon" href="{{ route('modeltest.index') }}">
                     <i class="flaticon-381-file"></i>
                     <span class="nav-text">Model Test
                         {{-- <span class="badge badge-sm badge-danger ms-3">New</span> --}}
                     </span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('modeltest.index') }}">Model Test List</a></li>
-                </ul>
             </li>
             <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-controls-3"></i>

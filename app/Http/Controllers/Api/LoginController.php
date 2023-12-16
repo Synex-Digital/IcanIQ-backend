@@ -29,14 +29,28 @@ class LoginController extends Controller
 
         //Loggin attempt
         $credentials = $request->only(['email', 'password']);
-        Auth::attempt($credentials);
-        $user = Auth::user();
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-        $token = $user->createToken('userlogin')->accessToken;
-        return response([
-            'status'    => 1,
-            'token'     => $token,
-            'user'      => $user,
-        ], 200);
+            $token = $user->createToken('userlogin')->accessToken;
+            return response([
+                'status'    => 1,
+                'token'     => $token,
+                'user'      => $user,
+            ], 200);
+        } else {
+            return response([
+                'status'    => 0,
+                'user'      => 'Not Found',
+            ], 200);
+        }
+        // Auth::attempt($credentials);
+
+    }
+    function data()
+    {
+        return response()->json([
+            'status' => 1
+        ]);
     }
 }

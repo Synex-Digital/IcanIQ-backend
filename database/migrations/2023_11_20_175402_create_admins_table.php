@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('number');
             $table->string('password');
-            $table->string('profile');
-            $table->integer('status');
+            $table->string('profile')->nullable();
+            $table->integer('status')->default(1);
+            $table->enum('role', ['admin', 'superadmin', 'user']);
             $table->timestamps();
         });
     }
