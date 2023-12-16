@@ -136,7 +136,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Profile Datatable</h4>
+                        <h4 class="card-title">Model Test</h4>
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#addclassmodal">+Model Test</button>
                     </div>
@@ -146,6 +146,7 @@
                                 <thead>
                                     <tr>
                                         <th>Title</th>
+                                        <th>Count</th>
                                         <th>Exam Time</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -155,10 +156,17 @@
                                     @foreach ($requests as $request)
                                         <tr>
                                             <td>{{ $request->title }}</td>
+                                            <td>
+
+                                                {{ $request->questions->count() }}
+                                            </td>
                                             <td>{{ $request->exam_time }} <sup>MN</sup></td>
                                             <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }} </td>
                                             <td>
                                                 <div class="d-flex">
+                                                    <a href="{{ route('modeltest.show', $request->id) }}"
+                                                        class="btn btn-success shadow btn-xs sharp me-1"
+                                                        value="{{ $request->id }}"><i class="fa fa-eye"></i></a>
                                                     <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
                                                         value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
                                                     <form action="{{ route('modeltest.destroy', $request->id) }}"

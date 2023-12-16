@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\Modeltest;
+use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -54,7 +55,9 @@ class ModeltestController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $requests = Question::where('test_id', $id)->get();
+        $modeltests = Modeltest::all();
+        return view('backend.question.index', compact('requests', 'modeltests'));
     }
 
     /**
