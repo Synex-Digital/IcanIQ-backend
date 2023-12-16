@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +13,7 @@ class LoginController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function login(Request $request): Response
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email'     => 'required',
@@ -21,10 +21,17 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) { //validation fails message
-            return response([
-                'status'    => 0,
-                'message'   => $validator->messages(),
-            ], 400);
+            $data = [
+                'user_id' => 1,
+                'username' => 'example_user',
+                // ... other user data
+            ];
+
+            return response()->json($data);
+            // return response([
+            //     'status'    => 0,
+            //     'message'   => $validator->messages(),
+            // ], 400);
         }
 
         //Loggin attempt

@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('modeltests', function (Blueprint $table) {
             $table->id();
-            $table->integer('class_id');
             $table->string('title');
             $table->bigInteger('exam_time');
             $table->longText('note')->nullable();
-            $table->integer('status');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

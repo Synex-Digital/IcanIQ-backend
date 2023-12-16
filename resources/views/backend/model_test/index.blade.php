@@ -21,19 +21,19 @@
                                 <label class="form-label">Exam Time</label>
                                 <div class="row">
                                     <div class="col-6">
-                                        <select class="form-control" id="hours">
-                                            <option value="0">0 hour</option>
+                                        <select class="form-control" name="hours" id="hours">
+                                            <option value="0" selected>0 hour</option>
                                             <option value="1">1 hour</option>
                                             <option value="2">2 hours</option>
                                             <!-- Add more hour options as needed -->
                                         </select>
                                     </div>
                                     <div class="col-6">
-                                        <select class="form-control" id="minutes">
+                                        <select class="form-control" name="minutes" id="minutes">
                                             <option value="0">0 minutes</option>
                                             <option value="15">15 minutes</option>
                                             <option value="30">30 minutes</option>
-                                            <option value="45">45 minutes</option>
+                                            <option value="45" selected>45 minutes</option>
                                             <!-- Add more minute options as needed -->
                                         </select>
                                     </div>
@@ -43,13 +43,6 @@
                                 <label class="form-label">Write Note</label>
                                 <textarea class="form-control" name="note" id="" cols="10" rows="5"
                                     placeholder="Write Note For This Model Test"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="default-select  form-control wide" name="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Deactive</option>
-                                </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -74,28 +67,32 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="id">
-                            @if ($classes)
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Select Class</label>
-                                    <select class="default-select  form-control wide" name="class_id">
-                                        @foreach ($classes as $class)
-                                            <option value="{{ $class->id }}">{{ $class->class_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            @endif
                             <div class="form-group mb-3">
                                 <label class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title"
                                     placeholder="Model Test Title">
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Exam Start</label>
-                                <input class="form-control" type="time" name="start_time" id="start_time" value="asdf">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Exam End</label>
-                                <input class="form-control" type="time" name="end_time" id="end_time">
+                                <label class="form-label">Exam Time</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-control" name="hours" id="hours">
+                                            <option value="0" selected>0 hour</option>
+                                            <option value="1">1 hour</option>
+                                            <option value="2">2 hours</option>
+                                            <!-- Add more hour options as needed -->
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <select class="form-control" name="minutes" id="minutes">
+                                            <option value="0">0 minutes</option>
+                                            <option value="15">15 minutes</option>
+                                            <option value="30">30 minutes</option>
+                                            <option value="45" selected>45 minutes</option>
+                                            <!-- Add more minute options as needed -->
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Write Note</label>
@@ -148,10 +145,8 @@
                             <table id="example3" class="display" style="min-width: 850px">
                                 <thead>
                                     <tr>
-                                        <th>Class</th>
                                         <th>Title</th>
-                                        <th>Exam Start</th>
-                                        <th>Exam End</th>
+                                        <th>Exam Time</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -159,11 +154,9 @@
                                 <tbody>
                                     @foreach ($requests as $request)
                                         <tr>
-                                            <td>{{ $request->class->class_name }}</td>
                                             <td>{{ $request->title }}</td>
-                                            <td>{{ $request->start_time }}</td>
-                                            <td>{{ $request->end_time }}</td>
-                                            <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }}</td>
+                                            <td>{{ $request->exam_time }} <sup>MN</sup></td>
+                                            <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }} </td>
                                             <td>
                                                 <div class="d-flex">
                                                     <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
@@ -173,7 +166,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
-                                                            class="btn btn-danger shadow btn-xs sharp"><i
+                                                            class="btn btn-secondary shadow btn-xs sharp"><i
                                                                 class="fa fa-trash"></i></button>
                                                     </form>
                                                 </div>

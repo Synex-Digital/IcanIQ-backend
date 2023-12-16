@@ -33,20 +33,18 @@ class ModeltestController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
-            'title' => 'required|max:255',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'title'     => 'required|max:255',
+            'hours'     => 'required',
+            'minutes'   => 'required',
         ]);
+
+
         Modeltest::insert([
-            'class_id' => $request->class_id,
-            'title' => $request->title,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'note' => $request->note,
-            'status' => $request->status,
-            'created_at' => Carbon::now(),
+            'title'         => $request->title,
+            'exam_time'     => ($request->hours * 60) + $request->minutes,
+            'note'          => $request->note,
+            'created_at'    => Carbon::now(),
         ]);
         return back()->with('succ', 'Model Test Added...');
     }

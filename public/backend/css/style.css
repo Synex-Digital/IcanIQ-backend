@@ -1,58 +1,3 @@
-/*
-    Table of Contents
-
-    Name                 : Sego
-    Author               : DexignZone
-    Author Portfolio     : https://themeforest.net/user/dexignzone/portfolio
-
-
-
-    Table of Sass Contents
-
-    1. Abstracts
-        _bs-custom
-        _inheritance
-        _maps
-        _mixin
-        _variable
-
-    2. bootstrap
-        -Here goes all official bootstrap scss files
-
-    3. Global/Base
-        _color
-        _custom-grid
-        _fonts
-        _helper
-        _reset
-
-    4. layout
-        +footer
-        +header
-        +rtl
-        +sidebar
-        +tables
-        +theme
-        +version-dark
-
-    5. Conponents
-        +app
-        +charts
-        +forms
-        +map
-        +uc
-        +ui
-        +widget
-
-    6. Page
-        _index-1
-        _page-error
-        _page-register
-        _page-signin
-        _page-user-lock
-        _page-user-lock
-
-*/
 @import url("../icons/simple-line-icons/css/simple-line-icons.css");
 @import url("../icons/font-awesome-6/css/all.min.css");
 @import url("../icons/material-design-iconic-font/css/materialdesignicons.min.css");
@@ -260,12 +205,12 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary: #EA7A9A;
+    --bs-primary: #1F2937;
     --bs-secondary: #3E3F7A;
     --bs-success: #2BC155;
     --bs-info: #1EA7C5;
-    --bs-warning: #FF6D4D;
-    --bs-danger: #F94687;
+    --bs-warning: #1F2937;
+    --bs-danger: #050708;
     --bs-light: #F4F5F9;
     --bs-dark: #B1B1B1;
     --bs-primary-rgb: 234, 122, 154;
@@ -351,8 +296,8 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     --bs-focus-ring-color: rgba(234, 122, 154, 0.25);
     --bs-form-valid-color: #2BC155;
     --bs-form-valid-border-color: #2BC155;
-    --bs-form-invalid-color: #F94687;
-    --bs-form-invalid-border-color: #F94687;
+    --bs-form-invalid-color: #050708;
+    --bs-form-invalid-border-color: #050708;
 }
 
 [data-bs-theme="dark"] {
@@ -3678,19 +3623,19 @@ fieldset:disabled .btn {
 
 .btn-primary {
     --bs-btn-color: #000;
-    --bs-btn-bg: #EA7A9A;
-    --bs-btn-border-color: #EA7A9A;
+    --bs-btn-bg: #050708;
+    --bs-btn-border-color: #050708;
     --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #ed8ea9;
-    --bs-btn-hover-border-color: #ec87a4;
+    --bs-btn-hover-bg: #1F2937;
+    --bs-btn-hover-border-color: #1F2937;
     --bs-btn-focus-shadow-rgb: 199, 104, 131;
     --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #ee95ae;
-    --bs-btn-active-border-color: #ec87a4;
+    --bs-btn-active-bg: #1F2937;
+    --bs-btn-active-border-color: #1F2937;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #EA7A9A;
-    --bs-btn-disabled-border-color: #EA7A9A;
+    --bs-btn-disabled-bg: #050708;
+    --bs-btn-disabled-border-color: #050708;
 }
 
 .btn-secondary {
@@ -3746,36 +3691,36 @@ fieldset:disabled .btn {
 
 .btn-warning {
     --bs-btn-color: #000;
-    --bs-btn-bg: #FF6D4D;
-    --bs-btn-border-color: #FF6D4D;
+    --bs-btn-bg: #050708;
+    --bs-btn-border-color: #050708;
     --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #ff8368;
-    --bs-btn-hover-border-color: #ff7c5f;
+    --bs-btn-hover-bg: #1F2937;
+    --bs-btn-hover-border-color: #1F2937;
     --bs-btn-focus-shadow-rgb: 217, 93, 65;
     --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #ff8a71;
-    --bs-btn-active-border-color: #ff7c5f;
+    --bs-btn-active-bg: #1F2937;
+    --bs-btn-active-border-color: #1F2937;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #FF6D4D;
-    --bs-btn-disabled-border-color: #FF6D4D;
+    --bs-btn-disabled-bg: #050708;
+    --bs-btn-disabled-border-color: #050708;
 }
 
 .btn-danger {
     --bs-btn-color: #000;
-    --bs-btn-bg: #F94687;
-    --bs-btn-border-color: #F94687;
+    --bs-btn-bg: #050708;
+    --bs-btn-border-color: #050708;
     --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #fa6299;
-    --bs-btn-hover-border-color: #fa5993;
+    --bs-btn-hover-bg: #1F2937;
+    --bs-btn-hover-border-color: #1F2937;
     --bs-btn-focus-shadow-rgb: 212, 60, 115;
     --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #fa6b9f;
-    --bs-btn-active-border-color: #fa5993;
+    --bs-btn-active-bg: #1F2937;
+    --bs-btn-active-border-color: #1F2937;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #F94687;
-    --bs-btn-disabled-border-color: #F94687;
+    --bs-btn-disabled-bg: #050708;
+    --bs-btn-disabled-border-color: #050708;
 }
 
 .btn-light {
@@ -3813,19 +3758,19 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-primary {
-    --bs-btn-color: #EA7A9A;
-    --bs-btn-border-color: #EA7A9A;
+    --bs-btn-color: #050708;
+    --bs-btn-border-color: #050708;
     --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #EA7A9A;
-    --bs-btn-hover-border-color: #EA7A9A;
+    --bs-btn-hover-bg: #050708;
+    --bs-btn-hover-border-color: #050708;
     --bs-btn-focus-shadow-rgb: 234, 122, 154;
     --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #EA7A9A;
-    --bs-btn-active-border-color: #EA7A9A;
+    --bs-btn-active-bg: #050708;
+    --bs-btn-active-border-color: #050708;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #EA7A9A;
+    --bs-btn-disabled-color: #050708;
     --bs-btn-disabled-bg: transparent;
-    --bs-btn-disabled-border-color: #EA7A9A;
+    --bs-btn-disabled-border-color: #050708;
     --bs-gradient: none;
 }
 
@@ -3881,10 +3826,10 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-warning {
-    --bs-btn-color: #FF6D4D;
-    --bs-btn-border-color: #FF6D4D;
+    --bs-btn-color: #050708;
+    --bs-btn-border-color: #050708;
     --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #FF6D4D;
+    --bs-btn-hover-bg: #1F2937;
     --bs-btn-hover-border-color: #FF6D4D;
     --bs-btn-focus-shadow-rgb: 255, 109, 77;
     --bs-btn-active-color: #000;
