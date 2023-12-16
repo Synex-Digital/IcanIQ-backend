@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('class_id');
             $table->string('title');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->bigInteger('exam_time');
             $table->longText('note')->nullable();
             $table->integer('status');
             $table->timestamps();

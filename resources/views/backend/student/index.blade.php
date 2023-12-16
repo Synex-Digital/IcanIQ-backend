@@ -140,6 +140,7 @@
                             <table id="example3" class="display" style="min-width: 850px">
                                 <thead>
                                     <tr>
+                                        <th>StudentID</th>
                                         <th>Profile</th>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -151,6 +152,7 @@
                                 <tbody>
                                     @foreach ($requests as $request)
                                         <tr>
+                                            <td>{{ $request->student_id }}</td>
                                             <td>
                                                 <img style="width: 50px;"
                                                     src="{{ asset('files/student/' . $request->profile) }}">

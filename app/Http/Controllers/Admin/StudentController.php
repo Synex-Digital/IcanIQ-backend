@@ -8,7 +8,6 @@ use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use Photo;
 
 class StudentController extends Controller
@@ -51,8 +50,11 @@ class StudentController extends Controller
             $image_name = Photo::$name;
         }
 
+        $id = User::count() == 0 ? User::count() : User::orderBy('id', 'DESC')->first()->id;
+        $student_id = Carbon::now()->format('Ydm') . $id;
         User::insert([
             // 'class_id' => $request->class_id,
+            'student_id'    => $student_id,
             'name'          => $request->name,
             'email'         => $request->email,
             'number'        => $request->number,
