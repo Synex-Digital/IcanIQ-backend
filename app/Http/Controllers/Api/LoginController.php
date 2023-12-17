@@ -23,7 +23,7 @@ class LoginController extends Controller
         if ($validator->fails()) { //validation fails message
             return response()->json([
                 'status'    => 0,
-                'message'   => $validator->messages(),
+                'message'   => $validator->errors()->all(),
             ], 400);
         }
 
