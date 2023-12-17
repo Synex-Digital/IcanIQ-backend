@@ -20,7 +20,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('question.store') }}" method="POST">
+                        <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-3">
                                 <label class="form-label">Select Modeltest</label>
@@ -32,32 +32,12 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Question</label>
-                                <input type="text" class="form-control" name="question_test"
+                                <input type="text" class="form-control" name="question_test_text"
                                     placeholder="Write Question Here..">
                             </div>
-                            <div class="form-group mb-3 d-flex gap-5 justify-content-between">
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Require</label>
-                                    <div class="mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" value="1"
-                                                    name="required">Compulsory
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Status</label>
-                                    <div class="mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" value="1"
-                                                    name="status">Active
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Question Image</label>
+                                <input type="file" class="form-control" name="question_test_image">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Add Question</button>
@@ -78,47 +58,27 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('question.update', 'id') }}" method="POST">
+                        <form action="{{ route('question.update', 'id') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="id">
-                            {{-- <div class="form-group mb-3">
-                            <label class="form-label">Select Modeltest</label>
-                            <select class="default-select  form-control wide" name="test_id">
-                                @foreach ($modeltests as $modeltest)
-                                <option value="{{ $modeltest->id }}">{{ $modeltest->title }}</option>
-                               @endforeach
-                            </select>
-                        </div> --}}
                             <input type="hidden" name="test_id" id="test_id">
                             <div class="form-group mb-3">
                                 <label class="form-label">Question</label>
-                                <input type="text" class="form-control" id="question" name="question_test"
+                                <input type="text" class="form-control" id="question_test_text" name="question_test_text"
                                     placeholder="Write Question Here..">
                             </div>
-                            <div class="form-group mb-3 d-flex gap-5 justify-content-between">
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Require</label>
-                                    <div class="mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input " value="1"
-                                                    name="required">Compulsory
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Status</label>
-                                    <div class="mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" value="1"
-                                                    name="status">Active
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Question Image</label>
+                                <input type="file" class="form-control" id="question_test_image" name="question_test_image"
+                                    placeholder="Write Question Here..">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="default-select  form-control wide" name="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Deactive</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update</button>
@@ -150,7 +110,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">All Question List</h4>
+                        <h4 class="card-title">{{ $requests->first()->modeltest->title }}</h4>
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#addclassmodal">+Add Question</button>
                     </div>
@@ -159,27 +119,20 @@
                             <table id="example3" class="display" style="min-width: 850px">
                                 <thead>
                                     <tr>
-                                        <th>Test Name</th>
+                                        <th>SL</th>
                                         <th>Question</th>
-                                        <th>Order</th>
+                                        <th>Question Image</th>
                                         <th>Status</th>
                                         <th>Choice</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($requests as $request)
+                                    @foreach ($requests as $sl=>$request)
                                         <tr>
-                                            <td>{{ $request->modeltest->title }}</td>
-                                            <td>{{ $request->question_test }}</td>
-
-                                            <td>
-                                                <div class="d-flex align-items-center"><span
-                                                        class="badge badge-xs light badge-{{ $request->required != 0 ? 'success' : 'warning' }} mr-1">
-                                                        {{ $request->required != 0 ? 'Compulsory' : 'Optional' }}
-                                                    </span>
-                                                </div>
-                                            </td>
+                                            <td>{{ $sl+1 }}</td>
+                                            <td>{{ $request->question_test_text }}</td>
+                                            <td><img width="60px" src="{{ asset('files/question') }}/{{ $request->question_test_image }}" alt=""></td>
 
                                             <td>
                                                 <div class="d-flex align-items-center"><span
@@ -243,7 +196,8 @@
                     url: "/question/" + question_id + "/edit",
                     success: function(response) {
                         console.log(response);
-                        $('#question').val(response.question_test);
+                        $('#question_test_text').val(response.question_test_text);
+                        $('#question_test_image').val(response.question_test_image);
                         $('#test_id').val(response.test_id);
                         $('#id').val(response.id);
                     }

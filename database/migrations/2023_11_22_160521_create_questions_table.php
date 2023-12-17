@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('question_test_text')->nullable();
             $table->string('question_test_image')->nullable();
             $table->boolean('required')->unsigned()->nullable();
-            $table->integer('status');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

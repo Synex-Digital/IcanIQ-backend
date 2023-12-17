@@ -13,4 +13,8 @@ class Modeltest extends Model
     {
         return $this->belongsTo(ClassModel::class, 'class_id');
     }
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'test_id');
+    }
 }
