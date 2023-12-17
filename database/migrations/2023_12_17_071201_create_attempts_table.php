@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('attempts', function (Blueprint $table) {
             $table->id();
-            $table->integer('attempt_id');
             $table->integer('user_id');
-            $table->integer('question_id');
-            $table->integer('choice_id');
-            $table->boolean('is_correct')->default(false);
+            $table->integer('model_id');
+            $table->timestamp('start_quiz')->nullable();
+            $table->timestamp('end_quiz')->nullable();
+            $table->enum('status', ['pending', 'accept', 'reject']);
+            $table->integer('admin_notification')->default(0);
+            $table->integer('user_notification')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('attempts');
     }
 };
