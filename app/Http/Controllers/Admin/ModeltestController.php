@@ -56,7 +56,7 @@ class ModeltestController extends Controller
     public function show(string $id)
     {
         $requests = Question::where('test_id', $id)->get();
-        $modeltests = Modeltest::all();
+        $modeltests = Modeltest::find($id);
         return view('backend.question.index', compact('requests', 'modeltests'));
     }
 

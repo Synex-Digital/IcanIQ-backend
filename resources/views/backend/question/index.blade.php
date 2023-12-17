@@ -25,9 +25,8 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Select Modeltest</label>
                                 <select class="default-select  form-control wide" name="test_id">
-                                    @foreach ($modeltests as $modeltest)
-                                        <option value="{{ $modeltest->id }}">{{ $modeltest->title }}</option>
-                                    @endforeach
+                                    <option value="{{ $modeltests->id }}" @readonly(true)>{{ $modeltests->title }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
@@ -70,8 +69,8 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Question Image</label>
-                                <input type="file" class="form-control" id="question_test_image" name="question_test_image"
-                                    placeholder="Write Question Here..">
+                                <input type="file" class="form-control" id="question_test_image"
+                                    name="question_test_image" placeholder="Write Question Here..">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Status</label>
@@ -91,9 +90,9 @@
 
         <div class="page-titles">
             <ol class="breadcrumb">
-                {{-- <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li> --}}
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('modeltest.index') }}">Model</a></li>
+                <li class="breadcrumb-item active"><a href="#">{{ $modeltests->title }}</a></li>
             </ol>
         </div>
         @if ($errors->any())
@@ -110,7 +109,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">{{ $requests->first()->modeltest->title }}</h4>
+                        <h4 class="card-title">{{ $modeltests->title }}</h4>
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#addclassmodal">+Add Question</button>
                     </div>
@@ -128,11 +127,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($requests as $sl=>$request)
+                                    @foreach ($requests as $sl => $request)
                                         <tr>
-                                            <td>{{ $sl+1 }}</td>
+                                            <td>{{ $sl + 1 }}</td>
                                             <td>{{ $request->question_test_text }}</td>
-                                            <td><img width="60px" src="{{ asset('files/question') }}/{{ $request->question_test_image }}" alt=""></td>
+                                            <td><img width="60px"
+                                                    src="{{ asset('files/question') }}/{{ $request->question_test_image }}"
+                                                    alt=""></td>
 
                                             <td>
                                                 <div class="d-flex align-items-center"><span

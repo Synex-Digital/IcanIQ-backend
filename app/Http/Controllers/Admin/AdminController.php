@@ -42,23 +42,24 @@ class AdminController extends Controller
     function admin_store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-            'number' => 'required|min:11|numeric',
-            'profile' => 'required',
-            'password' => 'required|min:8',
+            'name'      => 'required|max:255',
+            'email'     => 'required|email',
+            'number'    => 'required|min:11|numeric',
+            'profile'   => 'required',
+            'password'  => 'required|min:8',
         ]);
         $image = $request->profile;
         $image_name = $request->name . rand(1000, 10) . '.' . $image->extension();
-        Image::make($image)->save(base_path('public/files/profile/' . $image_name));
+        Image::make($image)->save(base_path('public/files/panelusers/' . $image_name));
         Admin::insert([
-            'name' => $request->name,
-            'profile' => $image_name,
-            'email' => $request->email,
-            'number' => $request->number,
-            'status' => $request->status,
-            'password' => bcrypt($request->password),
-            'created_at' => Carbon::now(),
+            'name'          => $request->name,
+            'profile'       => $image_name,
+            'email'         => $request->email,
+            'number'        => $request->number,
+            'status'        => $request->status,
+            'role'          => 'superadmin',
+            'password'      => bcrypt($request->password),
+            'created_at'    => Carbon::now(),
         ]);
         $credentials =  $request->only('email', 'password');
 
@@ -84,7 +85,6 @@ class AdminController extends Controller
             return back()->with('err', 'Credentials not matching');
         }
     }
-
     function logout()
     {
         Auth::guard('admin')->logout();

@@ -146,7 +146,7 @@
                                 <thead>
                                     <tr>
                                         <th>Title</th>
-                                        <th>Count</th>
+                                        <th>Questions</th>
                                         <th>Exam Time</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -157,8 +157,9 @@
                                         <tr>
                                             <td>{{ $request->title }}</td>
                                             <td>
-
-                                                {{ $request->questions->count() }}
+                                                <span class="badge badge-sm light badge-primary">
+                                                    {{ $request->questions->count() }}
+                                                </span>
                                             </td>
                                             <td>{{ $request->exam_time }} <sup>MN</sup></td>
                                             <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }} </td>
