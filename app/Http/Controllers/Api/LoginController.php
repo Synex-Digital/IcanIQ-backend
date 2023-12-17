@@ -21,17 +21,10 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) { //validation fails message
-            $data = [
-                'user_id' => 1,
-                'username' => 'example_user',
-                // ... other user data
-            ];
-
-            return response()->json($data);
-            // return response([
-            //     'status'    => 0,
-            //     'message'   => $validator->messages(),
-            // ], 400);
+            return response()->json([
+                'status'    => 0,
+                'message'   => $validator->messages(),
+            ], 400);
         }
 
         //Loggin attempt
@@ -40,13 +33,13 @@ class LoginController extends Controller
             $user = Auth::user();
 
             $token = $user->createToken('userlogin')->accessToken;
-            return response([
+            return response()->json([
                 'status'    => 1,
                 'token'     => $token,
                 'user'      => $user,
             ], 200);
         } else {
-            return response([
+            return response()->json([
                 'status'    => 0,
                 'user'      => 'Not Found',
             ], 200);
@@ -59,5 +52,18 @@ class LoginController extends Controller
         return response()->json([
             'status' => 1
         ]);
+    }
+
+    public function logout(): JsonResponse
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $user->token()->revoke(); // Revoking the user's access token
+
+            return response()->json(['message' => 'Successfully logged out'], 200);
+        }
+
+        return response()->json(['message' => 'Unable to logout'], 400);
     }
 }
