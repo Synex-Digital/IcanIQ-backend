@@ -25,12 +25,12 @@ class ModelTestController extends Controller
 
                 $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->first(); //getting attempt data
 
-                if ($attempt->status == 'accept') {
-                    $status = 2;
-                } elseif ($attempt->status == 'reject') {
-                    $status = 3;
+                if ($attempt->status == 'pending') {
+                    $status = 2; //Pending button
+                } elseif ($attempt->status == 'accept') {
+                    $status = 3; //Start button
                 } else {
-                    $status = 1;
+                    $status = 1; //Request button
                 }
             } else {
                 $status = 1;
