@@ -17,6 +17,27 @@ class ModelTestController extends Controller
         $model = $modelTest->map(function ($data) {
             unset($data['status']);
             unset($data['updated_at']);
+
+            //functions
+            $status = null;
+
+            if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->exists()) {
+
+                $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->first(); //getting attempt data
+
+                if ($attempt->status == 'accept') {
+                    $status = 2;
+                } elseif ($attempt->status == 'reject') {
+                    $status = 3;
+                } else {
+                    $status = 1;
+                }
+            } else {
+                $status = 1;
+            }
+
+            //Adding extra data
+            $data['approval'] = $status;
             return $data;
         });
         return response()->json([
@@ -66,36 +87,36 @@ class ModelTestController extends Controller
             ], 401);
         }
     }
-    function approvalModel(): JsonResponse
-    {
-        if (Auth::check()) {
-            $modelTest = Attempt::where('user_id', Auth::user()->id)->get();
+    // function approvalModel(): JsonResponse
+    // {
+    //     if (Auth::check()) {
+    //         $modelTest = Attempt::where('user_id', Auth::user()->id)->get();
 
-            $model = $modelTest->map(function ($data) {
-                unset($data['start_quiz']);
-                unset($data['end_quiz']);
-                unset($data['admin_notification']);
-                unset($data['updated_at']);
-                return $data;
-            });
+    //         $model = $modelTest->map(function ($data) {
+    //             unset($data['start_quiz']);
+    //             unset($data['end_quiz']);
+    //             unset($data['admin_notification']);
+    //             unset($data['updated_at']);
+    //             return $data;
+    //         });
 
-            if ($modelTest->count() != 0) {
-                return response()->json([
-                    'status'    => 1,
-                    'total'     => $modelTest->count(),
-                    'data'      => $model,
-                ]);
-            } else {
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Data not found'
-                ], 200);
-            }
-        } else {
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'User Not Authorized'
-            ], 401);
-        }
-    }
+    //         if ($modelTest->count() != 0) {
+    //             return response()->json([
+    //                 'status'    => 1,
+    //                 'total'     => $modelTest->count(),
+    //                 'data'      => $model,
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'status'    => 0,
+    //                 'message'   => 'Data not found'
+    //             ], 200);
+    //         }
+    //     } else {
+    //         return response()->json([
+    //             'status'    => 0,
+    //             'message'   => 'User Not Authorized'
+    //         ], 401);
+    //     }
+    // }
 }
