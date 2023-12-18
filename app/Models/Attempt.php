@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attempt extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'status',
+        'start_quiz',
+        'end_quiz',
+    ];
 }

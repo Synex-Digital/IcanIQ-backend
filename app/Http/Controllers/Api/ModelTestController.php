@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Attempt;
 use App\Models\Modeltest;
+use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ModelTestController extends Controller
@@ -87,36 +90,35 @@ class ModelTestController extends Controller
             ], 401);
         }
     }
-    // function approvalModel(): JsonResponse
-    // {
-    //     if (Auth::check()) {
-    //         $modelTest = Attempt::where('user_id', Auth::user()->id)->get();
+    function attempt(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'model_id'      => 'required',
+        ]);
 
-    //         $model = $modelTest->map(function ($data) {
-    //             unset($data['start_quiz']);
-    //             unset($data['end_quiz']);
-    //             unset($data['admin_notification']);
-    //             unset($data['updated_at']);
-    //             return $data;
-    //         });
+        if ($validator->fails()) { //validation fails message
+            return response()->json([
+                'status'    => 0,
+                'message'   => $validator->errors()->messages(),
+            ], 400);
+        }
 
-    //         if ($modelTest->count() != 0) {
-    //             return response()->json([
-    //                 'status'    => 1,
-    //                 'total'     => $modelTest->count(),
-    //                 'data'      => $model,
-    //             ]);
-    //         } else {
-    //             return response()->json([
-    //                 'status'    => 0,
-    //                 'message'   => 'Data not found'
-    //             ], 200);
-    //         }
-    //     } else {
-    //         return response()->json([
-    //             'status'    => 0,
-    //             'message'   => 'User Not Authorized'
-    //         ], 401);
-    //     }
-    // }
+        if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
+
+            $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
+            $update->start_quiz = Carbon::now();
+            $update->save();
+
+            $questions = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
+            return response()->json([
+                'status'    => 1,
+                'data'      => $questions
+            ]);
+        } else {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Someting is wrong with your Model Request, please contact with authority',
+            ]);
+        }
+    }
 }

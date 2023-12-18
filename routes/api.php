@@ -18,9 +18,13 @@ Route::middleware('auth:api')->group(function () {
 
     // Showcase
     Route::get('/model/test', [ModelTestController::class, 'model']);
-    Route::get('/model', [ModelTestController::class, 'approvalModel']);
+
+    //Attempt
+    Route::POST('/attempt', [ModelTestController::class, 'attempt']);
 
 
     //Request
-    Route::get('/model/request/{id}', [ModelTestController::class, 'request']);
+    Route::get('/model/request/{id}', [ModelTestController::class, 'request']); //Request to model
+    Route::get('/model/request/{id}', [ModelTestController::class, 'request']); //Request to model
+
 });
