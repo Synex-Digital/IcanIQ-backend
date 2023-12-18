@@ -21,7 +21,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/model', [ModelTestController::class, 'approvalModel']);
 
 
-
     //Request
     Route::get('/model/request/{id}', [ModelTestController::class, 'request']);
 });
