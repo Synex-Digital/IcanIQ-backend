@@ -123,7 +123,6 @@ class ModelTestController extends Controller
 
                 $questions = $data->choices->map(function ($data) {
                     unset($data['is_correct']);
-                    unset($data['question_id']);
                     unset($data['created_at']);
                     unset($data['updated_at']);
                     return $data;
