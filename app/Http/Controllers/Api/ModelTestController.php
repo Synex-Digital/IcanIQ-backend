@@ -26,7 +26,7 @@ class ModelTestController extends Controller
 
             if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->exists()) {
 
-                $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->first(); //getting attempt data
+                $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->latest()->first(); //getting attempt data
 
                 if ($attempt->status == 'pending') {
                     $status = 2; //Pending button

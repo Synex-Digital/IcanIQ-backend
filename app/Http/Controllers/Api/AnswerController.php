@@ -65,8 +65,6 @@ class AnswerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'model_id'          => 'required',
-            'question_id'       => 'required',
-            'choice_id'         => 'required',
         ]);
 
         if ($validator->fails()) { //validation fails message
@@ -77,28 +75,27 @@ class AnswerController extends Controller
         }
 
         if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
+            // $answer = null;
+            // if (Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->exists()) {
+            //     $answer = Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->first();
+            // } else {
 
-            $answer = null;
-            if (Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->exists()) {
-                $answer = Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->first();
-            } else {
-
-                $answer = new Answer();
-                $answer->student_id     = Auth::user()->id;
-            }
-            $answer->question_id    = $request->question_id;
-            $answer->choice_id      = $request->choice_id;
-            $answer->save();
+            //     $answer = new Answer();
+            //     $answer->student_id     = Auth::user()->id;
+            // }
+            // $answer->question_id    = $request->question_id;
+            // $answer->choice_id      = $request->choice_id;
+            // $answer->save();
 
             $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
-            // $attempt->status    = 'result';
+            $attempt->status    = 'result';
             $attempt->end_quiz  = Carbon::now();
             $attempt->save();
 
 
             return response()->json([
                 'status'    => 1,
-                'data'      => $answer,
+                'data'      => 'Done',
             ]);
         } else {
             return response()->json([
