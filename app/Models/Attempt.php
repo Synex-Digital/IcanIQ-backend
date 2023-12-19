@@ -13,4 +13,9 @@ class Attempt extends Model
         'start_quiz',
         'end_quiz',
     ];
+
+    function model()
+    {
+        return $this->belongsTo(Modeltest::class, 'model_id');
+    }
 }

@@ -50,7 +50,6 @@ class ModelTestController extends Controller
         ], 200);
     }
 
-
     function request($id): JsonResponse
     {
         if (Auth::check()) {
@@ -93,7 +92,6 @@ class ModelTestController extends Controller
         }
     }
 
-
     function attempt(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -110,7 +108,10 @@ class ModelTestController extends Controller
         if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
 
             $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
+
+            $minute = $update->model->exam_time;
             $update->start_quiz = Carbon::now();
+            $update->end_quiz = Carbon::now()->addMinutes($minute);
             $update->save();
 
             $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
