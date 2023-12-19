@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('model_id');
             $table->timestamp('start_quiz')->nullable();
             $table->timestamp('end_quiz')->nullable();
-            $table->enum('status', ['pending', 'accept', 'done', 'reject']);
+            $table->enum('status', ['pending', 'accept', 'done', 'result', 'reject']);
             $table->integer('admin_notification')->default(0);
             $table->integer('user_notification')->default(0);
             $table->timestamps();

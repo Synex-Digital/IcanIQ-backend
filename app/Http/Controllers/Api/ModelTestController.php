@@ -49,6 +49,8 @@ class ModelTestController extends Controller
             'modelTest' => $model,
         ], 200);
     }
+
+
     function request($id): JsonResponse
     {
         if (Auth::check()) {
@@ -90,6 +92,8 @@ class ModelTestController extends Controller
             ], 401);
         }
     }
+
+
     function attempt(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -109,7 +113,26 @@ class ModelTestController extends Controller
             $update->start_quiz = Carbon::now();
             $update->save();
 
-            $questions = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
+            $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
+            $questions = $questionsUpdate->map(function ($data) {
+                unset($data['test_id']);
+                unset($data['required']);
+                unset($data['status']);
+                unset($data['created_at']);
+                unset($data['updated_at']);
+
+                $questions = $data->choices->map(function ($data) {
+                    unset($data['is_correct']);
+                    unset($data['question_id']);
+                    unset($data['created_at']);
+                    unset($data['updated_at']);
+                    return $data;
+                });
+
+                // //Adding extra data
+                $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
+                return $data;
+            });
             return response()->json([
                 'status'    => 1,
                 'data'      => $questions

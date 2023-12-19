@@ -47,12 +47,7 @@ class LoginController extends Controller
         // Auth::attempt($credentials);
 
     }
-    function data()
-    {
-        return response()->json([
-            'status' => 1
-        ]);
-    }
+
 
     public function logout(): JsonResponse
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ModelTestController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::middleware('auth:api')->group(function () {
 
     //Attempt
     Route::POST('/attempt', [ModelTestController::class, 'attempt']);
+    Route::POST('/answer/submit', [AnswerController::class, 'submit']);
+    Route::POST('/answer/submit/done', [AnswerController::class, 'done']);
 
 
     //Request
