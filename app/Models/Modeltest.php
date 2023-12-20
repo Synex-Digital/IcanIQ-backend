@@ -19,6 +19,6 @@ class Modeltest extends Model
     }
     public function attempt()
     {
-        return $this->hasMany(attempt::class, 'model_id');
+        return $this->hasMany(Attempt::class, 'model_id');
     }
 }
