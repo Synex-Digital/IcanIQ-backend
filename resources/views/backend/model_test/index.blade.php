@@ -25,16 +25,13 @@
                                             <option value="0" selected>0 hour</option>
                                             <option value="1">1 hour</option>
                                             <option value="2">2 hours</option>
-                                            <!-- Add more hour options as needed -->
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <select class="form-control" name="minutes" id="minutes">
-                                            <option value="0">0 minutes</option>
-                                            <option value="15">15 minutes</option>
-                                            <option value="30">30 minutes</option>
-                                            <option value="45" selected>45 minutes</option>
-                                            <!-- Add more minute options as needed -->
+                                            <?php for ($i = 0; $i <= 60; $i += 1): ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i === 0 ? '0' : $i; ?> minutes</option>
+                                            <?php endfor; ?>
                                         </select>
                                     </div>
                                 </div>

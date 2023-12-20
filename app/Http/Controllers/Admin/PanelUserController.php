@@ -16,8 +16,8 @@ class PanelUserController extends Controller
     public function index()
     {
         $panelusers = Admin::all();
-        return view('backend.panel_users.index',[
-            'panelusers'=>$panelusers,
+        return view('backend.panel_users.index', [
+            'panelusers' => $panelusers,
         ]);
     }
 

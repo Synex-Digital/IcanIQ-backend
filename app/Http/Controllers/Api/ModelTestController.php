@@ -33,6 +33,10 @@ class ModelTestController extends Controller
                     $status = 2; //Pending button
                 } elseif ($attempt->status == 'accept') {
                     $status = 3; //Start button
+                } elseif ($attempt->status == 'result') {
+                    $status = 4; //Completed button
+                } elseif ($attempt->status == 'reject') {
+                    $status = 5; //Reject button
                 } else {
                     $status = 1; //Request button
                 }
@@ -57,7 +61,7 @@ class ModelTestController extends Controller
         if (Modeltest::find($id)) {
             $time = Carbon::now()->subHour(2);
             $model = Attempt::where('model_id', $id)
-                ->whereIn('status', ['pending', 'accept'])
+                ->whereIn('status', ['pending', 'accept', 'result'])
                 ->get();
 
             if ($model->count() == 0) {
@@ -76,7 +80,7 @@ class ModelTestController extends Controller
             } else { //Multiple Request Check
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Can not attempt twice a day'
+                    'message'   => 'Please wait for the next Attempt'
                 ], 206);
             }
         } else { // Model Check

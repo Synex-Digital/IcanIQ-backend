@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Attempt;
 use App\Models\ClassModel;
+use App\Models\Modeltest;
 use App\Models\Question;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -94,11 +97,16 @@ class AdminController extends Controller
     }
     function dashboard()
     {
-        $a = 1;
-        $b = 1;
-        $c = ($a == $b);
-        // dd($c);
+        $user = User::all()->count();
+        $model = Modeltest::all()->count();
+        $panel = Admin::all()->count();
+        $attempt = Attempt::all()->count();
 
-        return view('backend.home.dashboard');
+        return view('backend.home.dashboard', [
+            'user'      => $user,
+            'model'     => $model,
+            'panel'     => $panel,
+            'attempt'   => $attempt,
+        ]);
     }
 }

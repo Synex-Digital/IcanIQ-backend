@@ -16,56 +16,44 @@
             <li><a href="{{ route('student.index') }}">
                     <i class="flaticon-381-database-1"></i>
                     <span class="nav-text">Student
-                        {{-- <span class="badge badge-sm badge-danger ms-3">New</span> --}}
                     </span>
                 </a>
             </li>
-            {{-- <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-television"></i>
-                    <span class="nav-text">Class</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('class.index') }}">All Classes</a></li>
-                </ul>
-            </li> --}}
             <li><a class="ai-icon" href="{{ route('modeltest.index') }}">
-                    <i class="flaticon-381-file"></i>
+                    <i class="flaticon-381-network"></i>
                     <span class="nav-text">Model Test
-                        {{-- <span class="badge badge-sm badge-danger ms-3">New</span> --}}
                     </span>
                 </a>
             </li>
-            {{-- <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-controls-3"></i>
-                    <span class="nav-text">Question</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('question.index') }}">Question List</a></li>
-                </ul>
-            </li> --}}
-            {{-- <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-internet"></i>
-                    <span class="nav-text">Question Choice</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ route('questionchoice.index') }}">Answer</a></li>
-                </ul>
-            </li> --}}
             <li>
                 <a class="ai-icon" href="{{ route('requests.index') }}">
-                    <i class="flaticon-381-heart"></i>
+                    <i class="flaticon-381-television"></i>
                     <span class="nav-text">Request</span>
                 </a>
                 {{-- <ul aria-expanded="false">
                     <li><a href="{{ route('answer.index') }}">Answer List</a></li>
                 </ul> --}}
             </li>
+            <li>
+                <a class="ai-icon" href="{{ route('performance.list') }}">
+                    <i class="flaticon-381-settings-2"></i>
+                    <span class="nav-text">Performance</span>
+                </a>
+            </li>
 
         </ul>
 
         <div class="copyright">
-            <p>© 2023 All Rights Reserved</p>
-            <p>Made <a href="https://synexdigital.com"> by DexignZone</a></p>
+            <a href="{{ route('admin.logout') }}" class="dropdown-item ai-icon">
+                <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18"
+                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span class="ms-2">Logout </span>
+            </a>
         </div>
     </div>
 </div>

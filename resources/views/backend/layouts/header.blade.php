@@ -8,14 +8,7 @@
                     </div>
                 </div>
                 <ul class="navbar-nav header-right">
-                    <li class="nav-item">
-                        <form>
-                            <div class="input-group search-area d-xl-inline-flex d-none">
-                                <input type="text" class="form-control" placeholder="Search here...">
-                                <button class="input-group-text"><i class="flaticon-381-search-2"></i></button>
-                            </div>
-                        </form>
-                    </li>
+
                     {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link  ai-icon" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
                             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -192,14 +185,15 @@
                     </li> --}}
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                            <img src="{{ asset('backend') }}/images/profile/17.jpg" width="20" alt="/">
+                            <img src="{{ asset('files/panelusers/' . Auth::guard('admin')->user()->profile) }}"
+                                width="20" alt="/">
                             <div class="header-info">
                                 <span
                                     class="text-black"><strong>{{ Auth::guard('admin')->user()->name }}</strong></span>
                                 <p class="fs-12 mb-0">{{ Auth::guard('admin')->user()->role }}</p>
                             </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
+                        {{-- <div class="dropdown-menu dropdown-menu-end">
                             <a href="app-profile.html" class="dropdown-item ai-icon">
                                 <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary"
                                     width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -233,7 +227,7 @@
                                 </svg>
                                 <span class="ms-2">Logout </span>
                             </a>
-                        </div>
+                        </div> --}}
                     </li>
                 </ul>
             </div>

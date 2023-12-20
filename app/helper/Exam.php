@@ -52,9 +52,42 @@ class Exam
         }
         $data =  $structuredData->toArray();
 
-        // $data = $attempt->model;
-
-
         return $data;
+    }
+
+
+    //Giving The Result
+    public static function GetResultCount($attemptId)
+    {
+        $totalResultData = self::TotalResultList($attemptId);
+        $correctAndWrongCounts = self::CountCorrectAndWrongAnswers($totalResultData);
+
+        // Count the total number of questions
+        $totalQuestions = count($totalResultData);
+
+        // Add the 'total_questions' field to the result counts
+        $correctAndWrongCounts['total'] = $totalQuestions;
+
+        return $correctAndWrongCounts;
+    }
+
+    //Counting result
+    private static function CountCorrectAndWrongAnswers($data)
+    {
+        $correctCount = 0;
+        $wrongCount = 0;
+
+        foreach ($data as $question) {
+            if ($question['is_correct']) {
+                $correctCount++;
+            } else {
+                $wrongCount++;
+            }
+        }
+
+        return [
+            'correct' => $correctCount,
+            'wrong' => $wrongCount,
+        ];
     }
 }
