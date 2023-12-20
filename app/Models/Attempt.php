@@ -14,10 +14,10 @@ class Attempt extends Model
         'end_quiz',
     ];
 
-    function rel_modelstest()
-    {
-        return $this->belongsTo(Modeltest::class, 'model_id');
-    }
+    // function rel_modelstest()
+    // {
+    //     return $this->belongsTo(Modeltest::class, 'model_id');
+    // }
     function rel_user()
     {
         return $this->belongsTo(User::class, 'user_id');

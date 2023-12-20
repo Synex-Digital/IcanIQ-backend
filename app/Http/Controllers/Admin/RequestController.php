@@ -17,8 +17,8 @@ class RequestController extends Controller
     public function index()
     {
         $requests = Modeltest::all();
-        return view('backend.requests.index',[
-            'requests'=>$requests,
+        return view('backend.requests.index', [
+            'requests' => $requests,
         ]);
     }
 
@@ -41,11 +41,25 @@ class RequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, $id)
     {
-        $attempt = Attempt::where('model_id',$id)->where('status', 'pending')->get();
-        return view('backend.attempt.index',[
-            'attempt'=>$attempt,
+        // dd($request->all());
+
+        $data = Attempt::query();
+
+        if ($request->has('status')) {
+            if ($request->status != 'clear') {
+                $data->where('status', $request->status);
+            }
+        } else {
+            $data->where('status', 'pending');
+        }
+
+
+        $attempt = $data->where('model_id', $id)->get();
+
+        return view('backend.attempt.index', [
+            'attempt' => $attempt,
         ]);
     }
 
@@ -82,16 +96,16 @@ class RequestController extends Controller
         //
     }
 
-    function attempt_all(Request $request){
-        if($request->btn == 1){
+    function attempt_all(Request $request)
+    {
+        if ($request->btn == 1) {
             $attempts = Attempt::where('model_id', $request->model_id)->where('status', 'pending')->get();
 
             foreach ($attempts as $attempt) {
                 $attempt->status = 'accept';
                 $attempt->save();
             }
-        }
-        else{
+        } else {
             $attempts = Attempt::where('model_id', $request->model_id)->where('status', 'pending')->get();
 
             foreach ($attempts as $attempt) {
@@ -101,5 +115,4 @@ class RequestController extends Controller
         }
         return back()->with('succ', 'Attempt Updated...');
     }
-
 }

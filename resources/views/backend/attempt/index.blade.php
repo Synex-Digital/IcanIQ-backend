@@ -34,8 +34,9 @@
         <div class="page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                @if($attempt->first() && $attempt->first()->id != null)
-                    <li class="breadcrumb-item active"><a href="#">{{ $attempt->first()->rel_modelstest->title }}</a></li>
+                @if ($attempt->first() && $attempt->first()->id != null)
+                    <li class="breadcrumb-item active"><a href="#">{{ $attempt->first()->model->title }}</a>
+                    </li>
                 @endif
             </ol>
         </div>
@@ -54,16 +55,33 @@
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <h4>Request</h4>
+                            <form class="form" id="formFilter" action="" method="get">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col mr-2">
+                                        <select name="status" class="form-control" id="selectedOption">
+                                            <option value="clear">Clear</option>
+                                            <option value="accept" selected>Accept</option>
+                                            <option value="done">Done</option>
+                                            <option value="result">Processing</option>
+                                            <option value="reject">Reject</option>
+                                            <option value="pending">Pending</option>
+                                        </select>
+                                    </div>
+                                    <div class="col ">
+                                        <button class="btn btn-primary" type="submit">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        @if($attempt->first() && $attempt->first()->id != null)
+                        @if ($attempt->first() && $attempt->first()->id != null)
                             <form action="{{ route('attempt.all') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="model_id" value="{{ $attempt->first()->model_id }}">
-                                <button type="submit" name="btn" value="1" class="btn btn-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#addclassmodal">+Done</button>
-                                <button type="submit" name="btn" value="2" class="btn btn-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#addclassmodal">+Reject</button>
+                                <button type="submit" name="btn" value="1" class="btn btn-secondary"
+                                    data-bs-toggle="modal" data-bs-target="#addclassmodal">+Done</button>
+                                <button type="submit" name="btn" value="2" class="btn btn-secondary"
+                                    data-bs-toggle="modal" data-bs-target="#addclassmodal">+Reject</button>
                             </form>
                         @endif
                     </div>
@@ -119,7 +137,11 @@
                     }
                 });
             })
+
+            $('#selectedOption').change(function() {
+                console.log('hi');
+                $('#submitForm').submit(); // Submit the form when select value changes
+            }).trigger('change');
         })
     </script>
-
 @endsection
