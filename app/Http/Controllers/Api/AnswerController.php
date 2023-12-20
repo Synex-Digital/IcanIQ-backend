@@ -101,6 +101,7 @@ class AnswerController extends Controller
 
             return response()->json([
                 'status'    => 1,
+                'exam_time' => 0,
                 'data'      => 'Done',
             ]);
         } else {
