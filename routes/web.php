@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\RequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +48,12 @@ Route::middleware('admin')->group(function () {
     Route::resource('answer', AnswerController::class);
     Route::resource('panel-user', PanelUserController::class);
     Route::resource('requests', RequestController::class);
+    Route::resource('tests', TestController::class);
     Route::post('/getanswer', [GetAnswerController::class, 'getanswer'])->name('getanswer');
     Route::post('/attempt/all', [RequestController::class, 'attempt_all'])->name('attempt.all');
+    Route::post('/modeltest/soft/delete/{id}', [ModeltestController::class, 'modeltest_soft_delete'])->name('modeltest.soft.delete');
     Route::get('/performance', [PerformanceController::class, 'list'])->name('performance.list');
     Route::get('/performance/attempt/{id}', [PerformanceController::class, 'attempt_list'])->name('performance.list.attempt');
+    Route::get('/download/invoice/{id}', [TestController::class, 'download_invoice'])->name('download.invoice');
+    Route::post('/getprints', [TestController::class, 'getprints'])->name('getprints');
 });
