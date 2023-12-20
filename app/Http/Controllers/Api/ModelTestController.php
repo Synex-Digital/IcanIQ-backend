@@ -110,10 +110,22 @@ class ModelTestController extends Controller
 
             $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
 
-            $minute = $update->model->exam_time;
-            $update->start_quiz = Carbon::now();
-            $update->end_quiz = Carbon::now()->addMinutes($minute);
-            $update->save();
+            $examTime = null;
+
+            if ($update && $update->end_quiz == null) {
+                $minute = $update->model->exam_time;
+                $update->start_quiz = Carbon::now();
+                $update->end_quiz = Carbon::now()->addMinutes($minute);
+                $update->save();
+            } else {
+            }
+            $currentTime = Carbon::now();
+            $examTime = $currentTime->diff($update->end_quiz)->format('%H:%I:%S');
+
+            if ($currentTime->gt($update->end_quiz)) {
+                $examTime = '00:00:00';
+            }
+
 
             $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
             $questions = $questionsUpdate->map(function ($data) {
@@ -151,8 +163,9 @@ class ModelTestController extends Controller
                 return $data;
             });
             return response()->json([
-                'status'    => 1,
-                'data'      => $questions
+                'status'        => 1,
+                'exam_time'     => $examTime,
+                'data'          => $questions
             ]);
         } else {
             return response()->json([

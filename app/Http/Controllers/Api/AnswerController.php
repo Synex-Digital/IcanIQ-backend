@@ -32,9 +32,14 @@ class AnswerController extends Controller
         if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
 
             $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
-            // $attempt->status    = 'result';
-            // $attempt->end_quiz  = Carbon::now();
-            // $attempt->save();
+            $examTime = null;
+
+            $currentTime = Carbon::now();
+            $examTime = $currentTime->diff($attempt->end_quiz)->format('%H:%I:%S');
+
+            if ($currentTime->gt($attempt->end_quiz)) {
+                $examTime = '00:00:00';
+            }
 
             $question = Question::find($request->question_id);
             $currect_choice = $question->correctChoice() == null ? 0 : $question->correctChoice()->id;
@@ -43,6 +48,8 @@ class AnswerController extends Controller
             if ($request->choice_id == $currect_choice) {
                 $choice = 1;
             }
+
+
 
             $answer = null;
             if (Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->exists()) {
@@ -59,8 +66,9 @@ class AnswerController extends Controller
             $answer->save();
 
             return response()->json([
-                'status'    => 1,
-                'data'      => $answer,
+                'status'        => 1,
+                'exam_time'     => $examTime,
+                'data'          => $answer,
             ]);
         } else {
             return response()->json([
