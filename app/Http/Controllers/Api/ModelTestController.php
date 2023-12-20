@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Attempt;
 use App\Models\Modeltest;
 use App\Models\Question;
@@ -26,7 +27,7 @@ class ModelTestController extends Controller
 
             if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->exists()) {
 
-                $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->first(); //getting attempt data
+                $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->latest()->first(); //getting attempt data
 
                 if ($attempt->status == 'pending') {
                     $status = 2; //Pending button
@@ -49,6 +50,7 @@ class ModelTestController extends Controller
             'modelTest' => $model,
         ], 200);
     }
+
     function request($id): JsonResponse
     {
         if (Auth::check()) {
@@ -90,6 +92,7 @@ class ModelTestController extends Controller
             ], 401);
         }
     }
+
     function attempt(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -106,10 +109,47 @@ class ModelTestController extends Controller
         if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
 
             $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
+
+            $minute = $update->model->exam_time;
             $update->start_quiz = Carbon::now();
+            $update->end_quiz = Carbon::now()->addMinutes($minute);
             $update->save();
 
-            $questions = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
+            $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
+            $questions = $questionsUpdate->map(function ($data) {
+                // unset($data['test_id']);
+                unset($data['required']);
+                // unset($data['status']);
+                unset($data['created_at']);
+                unset($data['updated_at']);
+
+
+                // //Adding extra data
+                $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
+
+                $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
+
+                $answer = Answer::where('attempt_id', $attemptID)->where('question_id', $data->id)->first();
+                $question = $answer ? true : false;
+
+                $data['exam_status'] = $question;
+
+                $choices = $data->choices;
+                foreach ($choices as &$choice) {
+                    unset($choice['is_correct']);
+                    unset($choice['created_at']);
+                    unset($choice['updated_at']);
+
+                    $choice['exam_status'] = false;
+
+                    // You can set the exam status based on the existence of $answer here
+                    if ($answer && $choice['id'] == $answer->choice_id) {
+                        $choice['exam_status'] = true;
+                    }
+                }
+
+                return $data;
+            });
             return response()->json([
                 'status'    => 1,
                 'data'      => $questions

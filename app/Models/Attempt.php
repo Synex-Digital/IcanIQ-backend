@@ -22,4 +22,8 @@ class Attempt extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    function model()
+    {
+        return $this->belongsTo(Modeltest::class, 'model_id');
+    }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\ClassModel;
+use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
@@ -92,6 +94,11 @@ class AdminController extends Controller
     }
     function dashboard()
     {
+        $a = 1;
+        $b = 1;
+        $c = ($a == $b);
+        // dd($c);
+
         return view('backend.home.dashboard');
     }
 }

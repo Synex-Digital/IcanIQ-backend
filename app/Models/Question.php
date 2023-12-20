@@ -9,7 +9,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['test_id', 'question_test_text','question_test_image', 'required', 'status'];
+    protected $fillable = ['test_id', 'question_test_text', 'question_test_image', 'required', 'status'];
 
     function modeltest()
     {
@@ -19,5 +19,10 @@ class Question extends Model
     public function choices()
     {
         return $this->hasMany(QuestionChoice::class, 'question_id');
+    }
+
+    public function correctChoice()
+    {
+        return $this->hasMany(QuestionChoice::class, 'question_id')->where('is_correct', 1)->first();
     }
 }

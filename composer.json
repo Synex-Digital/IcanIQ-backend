@@ -28,7 +28,8 @@
     },
     "autoload": {
         "files": [
-            "app/helper/photo.php"
+            "app/helper/photo.php",
+            "app/helper/Exam.php"
         ],
         "psr-4": {
             "App\\": "app/",
