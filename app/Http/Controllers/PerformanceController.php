@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Attempt;
 use App\Models\Modeltest;
 use Exam;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class PerformanceController extends Controller
 {
@@ -32,6 +30,7 @@ class PerformanceController extends Controller
         foreach ($attempt as  $value) {
             $value['result'] = Exam::GetResultCount($value->id);
         }
+
         return view('backend.performance.attempt', [
             'attempts'  => $attempt,
             'model'     => $model,

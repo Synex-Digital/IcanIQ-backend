@@ -3,6 +3,8 @@
 use App\Models\Answer;
 use App\Models\Attempt;
 use App\Models\Question;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class Exam
 {
@@ -67,8 +69,33 @@ class Exam
 
         // Add the 'total_questions' field to the result counts
         $correctAndWrongCounts['total'] = $totalQuestions;
+        $correctAndWrongCounts['time_taken'] = self::ExamTime($attemptId);
 
         return $correctAndWrongCounts;
+    }
+
+    //Exam time taken
+    public static function ExamTime($attempt)
+    {
+
+        $attempt = Attempt::find($attempt);
+
+        if ($attempt) {
+            $start_quiz = Carbon::parse($attempt->start_quiz);
+            $end_quiz = Carbon::parse($attempt->end_quiz);
+
+            if ($start_quiz && $end_quiz) {
+                // Calculate the difference between start and end times
+                $timeDifference = $start_quiz->diff($end_quiz);
+
+                // Format the time difference as HH:MM:SS
+                $examTime = $timeDifference->format('%H:%I:%S');
+
+                return $examTime;
+            }
+        }
+
+        return null;
     }
 
     //Counting result

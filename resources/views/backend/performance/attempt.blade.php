@@ -132,7 +132,11 @@
                                                     {{ $attempt->rel_user->student_id }}</span>
                                             </td>
                                             <td> <span class="badge badge-success">{{ $attempt->result['wrong'] }} /
-                                                    {{ $attempt->result['total'] }}</span></td>
+                                                    {{ $attempt->result['total'] }}</span>
+                                                <br>
+                                                <span class="badge badge-success">{{ $attempt->result['time_taken'] }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 <div class="d-flex align-items-center"><span
                                                         class="badge badge-xs light badge-{{ $attempt->status != 0 ? 'success' : 'warning' }} mr-1">
