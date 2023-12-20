@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PanelUserController;
 use App\Http\Controllers\Admin\QuestionChoiceController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\RequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,5 +45,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('questionchoice', QuestionChoiceController::class);
     Route::resource('answer', AnswerController::class);
     Route::resource('panel-user', PanelUserController::class);
+    Route::resource('requests', RequestController::class);
     Route::post('/getanswer', [GetAnswerController::class, 'getanswer'])->name('getanswer');
+    Route::post('/attempt/all', [RequestController::class, 'attempt_all'])->name('attempt.all');
 });

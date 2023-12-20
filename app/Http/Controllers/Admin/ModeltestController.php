@@ -76,15 +76,13 @@ class ModeltestController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'hours' => 'required',
+            'minutes' => 'required',
         ]);
         $modeltest = Modeltest::where('id', $request->id);
         $modeltest->update([
-            'class_id' => $request->class_id,
             'title' => $request->title,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
+            'exam_time'    => ($request->hours * 60) + $request->minutes,
             'note' => $request->note,
             'status' => $request->status,
             'updated_at' => Carbon::now(),

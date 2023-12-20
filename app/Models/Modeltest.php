@@ -17,4 +17,8 @@ class Modeltest extends Model
     {
         return $this->hasMany(Question::class, 'test_id');
     }
+    public function attempt()
+    {
+        return $this->hasMany(attempt::class, 'model_id');
+    }
 }
