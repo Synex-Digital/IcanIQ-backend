@@ -108,7 +108,7 @@ class ModelTestController extends Controller
 
             $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
 
-            $examTime = null;
+            $examTime = 0;
 
             if ($update && $update->end_quiz == null) {
                 $minute = $update->model->exam_time;
@@ -118,10 +118,10 @@ class ModelTestController extends Controller
             } else {
             }
             $currentTime = Carbon::now();
-            $examTime = $currentTime->diff($update->end_quiz)->format('%H:%I:%S');
+            $examTime = $currentTime->diffInMinutes($update->end_quiz);
 
             if ($currentTime->gt($update->end_quiz)) {
-                $examTime = '00:00:00';
+                $examTime = 0;
             }
 
 
