@@ -75,7 +75,6 @@ class QuestionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request->all());
         if ($request->question_test_text != null || $request->question_test_image != null) {
             if ($request->status) {
                 $status = '1';

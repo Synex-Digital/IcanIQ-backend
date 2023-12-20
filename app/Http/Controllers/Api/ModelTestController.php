@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Attempt;
 use App\Models\Modeltest;
 use App\Models\Question;
@@ -116,21 +117,37 @@ class ModelTestController extends Controller
 
             $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
             $questions = $questionsUpdate->map(function ($data) {
-                unset($data['test_id']);
+                // unset($data['test_id']);
                 unset($data['required']);
-                unset($data['status']);
+                // unset($data['status']);
                 unset($data['created_at']);
                 unset($data['updated_at']);
 
-                $questions = $data->choices->map(function ($data) {
-                    unset($data['is_correct']);
-                    unset($data['created_at']);
-                    unset($data['updated_at']);
-                    return $data;
-                });
 
                 // //Adding extra data
                 $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
+
+                $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
+
+                $answer = Answer::where('attempt_id', $attemptID)->where('question_id', $data->id)->first();
+                $question = $answer ? true : false;
+
+                $data['exam_status'] = $question;
+
+                $choices = $data->choices;
+                foreach ($choices as &$choice) {
+                    unset($choice['is_correct']);
+                    unset($choice['created_at']);
+                    unset($choice['updated_at']);
+
+                    $choice['exam_status'] = false;
+
+                    // You can set the exam status based on the existence of $answer here
+                    if ($answer && $choice['id'] == $answer->choice_id) {
+                        $choice['exam_status'] = true;
+                    }
+                }
+
                 return $data;
             });
             return response()->json([

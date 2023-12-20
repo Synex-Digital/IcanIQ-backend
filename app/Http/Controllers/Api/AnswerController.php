@@ -58,9 +58,6 @@ class AnswerController extends Controller
             $answer->is_correct     = $choice;
             $answer->save();
 
-
-
-
             return response()->json([
                 'status'    => 1,
                 'data'      => $answer,
