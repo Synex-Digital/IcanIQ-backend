@@ -98,6 +98,34 @@ class Exam
         return null;
     }
 
+    public static function calculateAverageTime($id): string
+    {
+        $examDurations = Attempt::where('model_id', $id)->whereNot('status', 'reject')->get();
+
+        $totalMinutes = 0;
+
+        foreach ($examDurations as $examTime) {
+            list($hours, $minutes, $seconds) = explode(':', $examTime);
+            $totalMinutes += $hours * 60 + $minutes + $seconds / 60;
+        }
+
+        $averageMinutes = $totalMinutes / count($examDurations);
+
+        return round($averageMinutes) . 'mn';
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Counting result
     private static function CountCorrectAndWrongAnswers($data)
     {

@@ -118,7 +118,7 @@ class ModelTestController extends Controller
             } else {
             }
             $currentTime = Carbon::now();
-            $examTime = $currentTime->diffInMinutes($update->end_quiz);
+            $examTime = $currentTime->diffInSeconds($update->end_quiz);
 
             if ($currentTime->gt($update->end_quiz)) {
                 $examTime = 0;
