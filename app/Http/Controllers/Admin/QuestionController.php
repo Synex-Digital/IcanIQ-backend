@@ -38,7 +38,7 @@ class QuestionController extends Controller
         if ($request->question_test_text != null || $request->question_test_image != null) {
             $image_name = null;
             if ($request->question_test_image != null) {
-                Photo::upload($request->question_test_image, 'files/question', 'Question', ['500', '500']);
+                Photo::upload($request->question_test_image, 'files/question', 'Question');
                 $image_name = Photo::$name;
             }
             Question::insert([
@@ -83,7 +83,7 @@ class QuestionController extends Controller
             }
             $image_name = null;
             if ($request->question_test_image != null) {
-                Photo::upload($request->question_test_image, 'files/question', 'Question', ['500', '500']);
+                Photo::upload($request->question_test_image, 'files/question', 'Question');
                 $image_name = Photo::$name;
             }
             Question::where('id', $request->id)->update([
