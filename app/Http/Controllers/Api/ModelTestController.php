@@ -18,7 +18,7 @@ class ModelTestController extends Controller
     function model(): JsonResponse
     {
         $modelTest = Modeltest::where('status', 1)->get();
-        foreach ($modelTest as  $data) {
+        foreach ($modelTest as $key => $data) {
             unset($data['status']);
             unset($data['updated_at']);
 
@@ -46,6 +46,7 @@ class ModelTestController extends Controller
 
             //Adding extra data
             $data['approval'] = $status;
+            $data['index'] = $key + 1;
             $data['total_question'] = $data->questions ? $data->questions->count() : 0;
         }
 
