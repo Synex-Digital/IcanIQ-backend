@@ -18,7 +18,7 @@ class ModelTestController extends Controller
     function model(): JsonResponse
     {
         $modelTest = Modeltest::where('status', 1)->get();
-        $model = $modelTest->map(function ($data) {
+        foreach ($modelTest as  $data) {
             unset($data['status']);
             unset($data['updated_at']);
 
@@ -46,12 +46,44 @@ class ModelTestController extends Controller
 
             //Adding extra data
             $data['approval'] = $status;
-            return $data;
-        });
+            $data['total_question'] = $data->questions ? $data->questions->count() : 0;
+        }
+
+
+        // $model = $modelTest->map(function ($data) {
+        //     unset($data['status']);
+        //     unset($data['updated_at']);
+
+        //     //functions
+        //     $status = null;
+
+        //     if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->exists()) {
+
+        //         $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->latest()->first(); //getting attempt data
+
+        //         if ($attempt->status == 'pending') {
+        //             $status = 2; //Pending button
+        //         } elseif ($attempt->status == 'accept') {
+        //             $status = 3; //Start button
+        //         } elseif ($attempt->status == 'result') {
+        //             $status = 4; //Completed button
+        //         } elseif ($attempt->status == 'reject') {
+        //             $status = 5; //Reject button
+        //         } else {
+        //             $status = 1; //Request button
+        //         }
+        //     } else {
+        //         $status = 1;
+        //     }
+
+        //     //Adding extra data
+        //     $data['approval'] = $status;
+        //     return $data;
+        // });
         return response()->json([
             'status' => 1,
             'total' => $modelTest->count(),
-            'modelTest' => $model,
+            'modelTest' => $modelTest,
         ], 200);
     }
 
