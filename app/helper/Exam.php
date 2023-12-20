@@ -39,7 +39,7 @@ class Exam
                 'correct_id'            => null,
                 'wrong_id'              => null,
                 'is_correct'            => false,
-                // 'choices'               => $question->choices,
+                'choices'               => $question->choices,
             ];
 
             if ($userAnswers->has($question->id)) {
@@ -113,18 +113,6 @@ class Exam
 
         return round($averageMinutes) . 'mn';
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     //Counting result
     private static function CountCorrectAndWrongAnswers($data)
