@@ -35,14 +35,6 @@ class QuestionChoiceController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = [
-        //     'name' => 'Synex Digital',
-        //     'link' => 'https://synexdigital.com',
-        // ];
-        // Mail::to('email@gmail.com')->send(new MailMarketing($data, 'Synex Digital'));
-        // return back();
-        // die();
-        // dd($request->all());
         $request->validate([
             'choice_text' => 'required|max:255',
         ]);
@@ -53,7 +45,7 @@ class QuestionChoiceController extends Controller
         }
         $question_choice_count = QuestionChoice::where('question_id', $request->question_id)->count();
         $question_correct_count = QuestionChoice::where('question_id', $request->question_id)->where('is_correct', 1)->count();
-        if ($question_choice_count < 4) {
+        if ($question_choice_count < 5) {
             if ($question_correct_count == 1 && $is_correct) {
                 return back();
             }
