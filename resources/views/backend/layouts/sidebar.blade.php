@@ -51,13 +51,14 @@
                     <li><a href="{{ route('questionchoice.index') }}">Answer</a></li>
                 </ul>
             </li> --}}
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            <li>
+                <a class="ai-icon" href="{{ route('requests.index') }}">
                     <i class="flaticon-381-heart"></i>
-                    <span class="nav-text">Answer</span>
+                    <span class="nav-text">Request</span>
                 </a>
-                <ul aria-expanded="false">
+                {{-- <ul aria-expanded="false">
                     <li><a href="{{ route('answer.index') }}">Answer List</a></li>
-                </ul>
+                </ul> --}}
             </li>
 
         </ul>
