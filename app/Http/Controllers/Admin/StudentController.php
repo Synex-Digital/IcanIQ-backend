@@ -97,15 +97,27 @@ class StudentController extends Controller
         } else {
             $image_name = $student->profile;
         }
-        User::where('id', $request->id)->update([
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'number'        => $request->number,
-            'password'      => bcrypt($request->password),
-            'profile'       => $image_name,
-            'status'        => $request->status,
-            'created_at'    => Carbon::now(),
-        ]);
+        if ($request->password != null) {
+            User::where('id', $request->id)->update([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'number'        => $request->number,
+                'password'      => bcrypt($request->password),
+                'profile'       => $image_name,
+                'status'        => $request->status,
+                'created_at'    => Carbon::now(),
+            ]);
+        } else {
+            User::where('id', $request->id)->update([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'number'        => $request->number,
+                'profile'       => $image_name,
+                'status'        => $request->status,
+                'created_at'    => Carbon::now(),
+            ]);
+        }
+
         return back()->with('succ', 'Student Updated...');
     }
 

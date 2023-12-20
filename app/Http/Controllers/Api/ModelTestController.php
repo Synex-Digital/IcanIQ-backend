@@ -53,43 +53,37 @@ class ModelTestController extends Controller
 
     function request($id): JsonResponse
     {
-        if (Auth::check()) {
-            if (Modeltest::find($id)) {
-                $time = Carbon::now()->subHour(2);
-                $model = Attempt::where('model_id', $id)
-                    ->where('created_at', '>=', $time)
-                    ->get();
 
-                if ($model->count() == 0) {
+        if (Modeltest::find($id)) {
+            $time = Carbon::now()->subHour(2);
+            $model = Attempt::where('model_id', $id)
+                ->whereIn('status', ['pending', 'accept'])
+                ->get();
 
-                    $attempt = new Attempt();
-                    $attempt->user_id               = Auth::user()->id;
-                    $attempt->model_id              = $id;
-                    $attempt->status                = 'pending';
-                    $attempt->admin_notification    =  1;
-                    $attempt->save();
+            if ($model->count() == 0) {
 
-                    return response()->json([
-                        'status'    => 1,
-                        'message'   => 'Request is pending, wait for the approval'
-                    ], 200);
-                } else { //Multiple Request Check
-                    return response()->json([
-                        'status'    => 0,
-                        'message'   => 'Can not attempt twice a day'
-                    ], 206);
-                }
-            } else { // Model Check
+                $attempt = new Attempt();
+                $attempt->user_id               = Auth::user()->id;
+                $attempt->model_id              = $id;
+                $attempt->status                = 'pending';
+                $attempt->admin_notification    =  1;
+                $attempt->save();
+
+                return response()->json([
+                    'status'    => 1,
+                    'message'   => 'Request is pending, wait for the approval'
+                ], 200);
+            } else { //Multiple Request Check
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Model not found'
+                    'message'   => 'Can not attempt twice a day'
                 ], 206);
             }
-        } else { //Login Check
+        } else { // Model Check
             return response()->json([
                 'status'    => 0,
-                'message'   => 'User Not Authorized'
-            ], 401);
+                'message'   => 'Model not found, contact with authority'
+            ], 206);
         }
     }
 

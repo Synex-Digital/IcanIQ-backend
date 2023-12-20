@@ -32,6 +32,6 @@ Route::middleware('auth:api')->group(function () {
 
     //Request
     Route::get('/model/request/{id}', [ModelTestController::class, 'request']); //Request to model
-    Route::get('/model/request/{id}', [ModelTestController::class, 'request']); //Request to model
+    // Route::get('/model/request/{id}', [ModelTestController::class, 'request']); //Request to model
 
 });

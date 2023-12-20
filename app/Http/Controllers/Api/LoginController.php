@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPSTORM_META\map;
 
 class LoginController extends Controller
 {
@@ -33,7 +36,12 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
+            $profile = $user->profile != null ? asset('files/student/' . $user->profile) : null;
+            $user->profile = $profile;
+            $user->date = $user->created_at->format('d-M-Y');
+
             $token = $user->createToken('userlogin')->accessToken;
+
             return response()->json([
                 'status'    => 1,
                 'token'     => $token,

@@ -45709,7 +45709,7 @@ span#counter {
     background: #050708;
     background: -moz-linear-gradient(left, #050708 0%, #fac7b6 100%);
     background: -webkit-linear-gradient(left, #050708 0%, #fac7b6 100%);
-    background: linear-gradient(to right, #050708 0%, #fac7b6 100%);
+    background: linear-gradient(to right, #050708 0%, #232120 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#050708', endColorstr='#FAC7B6', GradientType=1);
 }
 
