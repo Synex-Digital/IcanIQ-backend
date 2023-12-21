@@ -111,8 +111,8 @@
 
                     <div class="card-header">
                         <div></div>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#addclassmodal">+Done</button>
+                        {{-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#addclassmodal">+Done</button> --}}
                     </div>
 
                     <div class="card-body">

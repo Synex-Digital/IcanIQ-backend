@@ -47,11 +47,12 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <div class="text-center mb-3">
-                                        <a href=""
+                                        <img src="{{ asset('backend/icaniq.png') }}" alt="" srcset="">
+                                        {{-- <a href=""
                                             style="font-size: 2.5rem;
-                                        font-weight: 700;color:#f07a9a">IcanIQ</a>
+                                        font-weight: 700;color:#000000">iCAN-IQ</a> --}}
                                     </div>
-                                    <h4 class="text-center mb-4">Your IP : {{ $ip }}</h4>
+                                    {{-- <h4 class="text-center mb-4">Your IP : {{ $ip }}</h4> --}}
                                     <form action="{{ route('login.admin') }}" method="POST">
                                         @csrf
                                         <div class="form-group mb-3">
