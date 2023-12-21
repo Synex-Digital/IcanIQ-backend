@@ -17,7 +17,7 @@ class ModeltestController extends Controller
     public function index()
     {
         $classes = ClassModel::all();
-        $requests = Modeltest::all();
+        $requests = Modeltest::whereNot('status', 5)->get();
         return view('backend.model_test.index', compact('classes', 'requests'));
     }
 
@@ -93,10 +93,11 @@ class ModeltestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function modeltest_soft_delete(Request $request, string $id)
     {
-        $modeltest = Modeltest::find($id);
-        $modeltest->delete();
+        Modeltest::find($id)->update([
+            'status'=>$request->status,
+        ]);
         return back()->with('succ', 'Class Deleted...');
     }
 }

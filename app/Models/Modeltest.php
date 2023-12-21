@@ -9,6 +9,8 @@ class Modeltest extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     function class()
     {
         return $this->belongsTo(ClassModel::class, 'class_id');
