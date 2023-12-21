@@ -31,9 +31,6 @@ class PerformanceController extends Controller
             $value['result'] = Exam::GetResultCount($value->id);
         }
 
-
-        // $test =
-
         return view('backend.performance.attempt', [
             'attempts'  => $attempt,
             'model'     => $model,

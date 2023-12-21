@@ -111,8 +111,8 @@
 
                     <div class="card-header">
                         <div></div>
-                        {{-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#addclassmodal">+Done</button> --}}
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#addclassmodal">+Done</button>
                     </div>
 
                     <div class="card-body">
@@ -133,7 +133,7 @@
                                                 <span style="font-size: 13px;font-weight: 600;color: #817979;"> ID :
                                                     {{ $attempt->rel_user->student_id }}</span>
                                             </td>
-                                            <td> <span class="badge badge-success">{{ $attempt->result['wrong'] }} /
+                                            <td> <span class="badge badge-success">{{ $attempt->result['correct'] }} /
                                                     {{ $attempt->result['total'] }}</span>
                                                 <br>
                                                 <span class="badge badge-success">{{ $attempt->result['time_taken'] }}

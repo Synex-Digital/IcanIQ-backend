@@ -23,4 +23,9 @@ class Modeltest extends Model
     {
         return $this->hasMany(Attempt::class, 'model_id');
     }
+
+    public function attemptRequest()
+    {
+        return $this->hasMany(Attempt::class, 'model_id')->where('status', 'pending');
+    }
 }

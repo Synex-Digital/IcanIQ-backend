@@ -156,7 +156,7 @@
                                             <td>{{ $request->title }}</td>
                                             <td>
                                                 <span class="badge badge-sm light badge-primary">
-                                                    {{ $request->attempt->count() }}
+                                                    {{ $request->attemptRequest->count() }}
                                                 </span>
                                             </td>
                                             <td>
