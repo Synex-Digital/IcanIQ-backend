@@ -67,7 +67,6 @@ class AnswerController extends Controller
 
             return response()->json([
                 'status'        => 1,
-                'exam_time'     => $examTime,
                 'data'          => $answer,
             ]);
         } else {
