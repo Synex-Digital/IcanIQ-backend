@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Modeltest;
 use App\Models\Question;
+use App\Models\QuestionChoice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Photo;
@@ -34,6 +35,12 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'test_id'               => 'required',
+            'question_test_text'    => 'required',
+            'choice'                => 'required',
+            'check'                 => 'required',
+        ]);
 
         if ($request->question_test_text != null || $request->question_test_image != null) {
             $image_name = null;
@@ -41,12 +48,28 @@ class QuestionController extends Controller
                 Photo::upload($request->question_test_image, 'files/question', 'Question');
                 $image_name = Photo::$name;
             }
-            Question::insert([
+
+            $newQuestion = Question::create([
                 'test_id' => $request->test_id,
                 'question_test_text' => $request->question_test_text,
                 'question_test_image' => $image_name,
-                'created_at' => Carbon::now(),
+                'created_at' => now(), // You can use now() instead of Carbon::now()
             ]);
+
+            $check = (int)$request->check;
+
+            foreach ($request->choice as $key => $value) {
+
+                $isCorrect = ($key === $check);
+
+                QuestionChoice::insert([
+                    'question_id' => $newQuestion->id,
+                    'choice_text' => $value,
+                    'is_correct' => $isCorrect,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
+
             return back()->with('succ', 'Question Added...');
         } else {
             return back()->with('err', 'Question Added...');

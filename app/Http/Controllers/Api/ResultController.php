@@ -32,7 +32,6 @@ class ResultController extends Controller
             unset($data['start_quiz']);
             unset($data['end_quiz']);
             unset($data['user_notification']);
-            unset($data['created_at']);
             unset($data['updated_at']);
 
             return $data;
@@ -47,9 +46,14 @@ class ResultController extends Controller
         $attempt = Attempt::find($id);
         if ($attempt->status == 'result' || $attempt->status == 'done') {
             $data = Exam::TotalResultList($id);
+            $history = Exam::GetResultCount($id);
 
 
-            return response()->json($data);
+            return response()->json([
+                'status'    => 1,
+                'history'   => $history,
+                'data'      => $data,
+            ]);
         } else {
             return response()->json([
                 'status'    => 0,

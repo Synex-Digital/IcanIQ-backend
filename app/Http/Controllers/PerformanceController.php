@@ -5,11 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Attempt;
 use App\Models\Modeltest;
 use Exam;
+use Illuminate\Support\Facades\Auth;
 
 class PerformanceController extends Controller
 {
     function list()
     {
+        //need User ID
+        $data = Exam::GetResultCount(1);
+        $attempt = Attempt::select('id')->where('user_id', 1)->whereIn('status', ['result', 'done'])->get();
+
+        $totalTest = $attempt->count();
+
+        $avScore = null;
+        $avTime = null;
+
+        foreach ($attempt as $key => $value) {
+            $data = Exam::GetResultCount($value->id);
+            $value['x'] = $data;
+            $avScore += $data['correct'];
+            // $avTime += $data['time_taken'];
+        }
+
+        $score = $avScore / $totalTest; //avarage score
+        dd($attempt);
+
+
         $model = Modeltest::where('status', 1)->get();
         foreach ($model as  $value) {
             $attempt = Attempt::where('model_id', $value->id)->where('status', 'result')->get();
@@ -30,6 +51,8 @@ class PerformanceController extends Controller
         foreach ($attempt as  $value) {
             $value['result'] = Exam::GetResultCount($value->id);
         }
+
+
 
         return view('backend.performance.attempt', [
             'attempts'  => $attempt,

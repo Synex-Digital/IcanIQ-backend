@@ -159,7 +159,7 @@ class ModelTestController extends Controller
 
 
             $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
-            $questions = $questionsUpdate->map(function ($data) {
+            $questions = $questionsUpdate->map(function ($data, $index) {
                 // unset($data['test_id']);
                 unset($data['required']);
                 // unset($data['status']);
@@ -176,6 +176,7 @@ class ModelTestController extends Controller
                 $question = $answer ? true : false;
 
                 $data['exam_status'] = $question;
+                $data['index'] = $index + 1;
 
                 $choices = $data->choices;
                 foreach ($choices as &$choice) {

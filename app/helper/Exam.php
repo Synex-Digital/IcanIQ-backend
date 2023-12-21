@@ -66,9 +66,11 @@ class Exam
         // Count the total number of questions
         $totalQuestions = count($totalResultData);
 
+        $modelTime = Attempt::find($attemptId);
         // Add the 'total_questions' field to the result counts
         $correctAndWrongCounts['total'] = $totalQuestions;
         $correctAndWrongCounts['time_taken'] = self::ExamTime($attemptId);
+        $correctAndWrongCounts['exam_time'] = $modelTime ? $modelTime->model->exam_time : null;
 
         return $correctAndWrongCounts;
     }

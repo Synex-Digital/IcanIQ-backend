@@ -38,6 +38,23 @@
                                 <label class="form-label">Question Image</label>
                                 <input type="file" class="form-control" name="question_test_image">
                             </div>
+                            <hr>
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>Choices</div>
+                                    <a class="btn btn-xs btn-dark" id="createChoice">+</a>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="choices-container">
+                                        <div class="d-flex mb-2 choice" id="choice">
+                                            <input type="text" class="form-control" name="choice[]"
+                                                placeholder="Write Question Here.." required>
+                                            <input type="radio" style="margin-left: 5px" name="check" required
+                                                id="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Add Question</button>
                             </div>
@@ -204,6 +221,17 @@
                     }
                 });
             })
+
+            var choiceCounter = 0; // Counter for radio button values
+
+            $('#createChoice').on('click', function() {
+                choiceCounter++;
+                var newChoice = $('.choice').first().clone(); // Clone the choice element
+                newChoice.find('input[type="text"]').val('');
+                newChoice.find('input[name="check"]').val(choiceCounter); // Update the radio button value
+                $('.choices-container').append(newChoice); // Append the cloned choice to the container
+                console.log(newChoice);
+            });
         })
     </script>
     <script>
