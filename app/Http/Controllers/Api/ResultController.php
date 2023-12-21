@@ -22,7 +22,7 @@ class ResultController extends Controller
             // $data['time_take'] =  Carbon::parse($data->start_quiz)->diffInMinutes(Carbon::parse($data->end_quiz));
             $data['questions'] = $data->model->questions->count();
             $data['exam_time'] = $data->model->exam_time;
-            $data['status'] = $data->status == 'result' ? true : false; // Loading for 1 : See For 2
+            $data['status'] = ($data->status == 'result' || $data->status == 'done') ? true : false; // Loading for 1 : See For 2
 
 
             unset($data['model']);

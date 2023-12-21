@@ -167,7 +167,7 @@ class ModelTestController extends Controller
                 unset($data['updated_at']);
 
 
-                // //Adding extra data
+                //Adding extra data
                 $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
 
                 $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
