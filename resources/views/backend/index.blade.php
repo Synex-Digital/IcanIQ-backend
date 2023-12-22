@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend') }}/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend/icaniq.png') }}">
     <link rel="stylesheet" href="{{ asset('backend') }}/vendor/chartist/css/chartist.min.css">
     <link href="{{ asset('backend') }}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css"

@@ -48,7 +48,7 @@
                                     <div class="choices-container">
                                         <div class="d-flex mb-2 choice" id="choice">
                                             <input type="text" class="form-control" name="choice[]"
-                                                placeholder="Write Question Here.." required>
+                                                placeholder="Write choice.." required>
                                             <input type="radio" style="margin-left: 5px" name="check" required
                                                 id="">
                                         </div>
