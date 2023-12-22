@@ -1,57 +1,6 @@
 @extends('backend.index')
 @section('content')
     <div class="container-fluid">
-        <!-- Add Order -->
-        <div class="modal fade" id="addclassmodal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Request</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('requests.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label class="form-label">Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Model Test Title">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Exam Time</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select class="form-control" name="hours" id="hours">
-                                            <option value="0" selected>0 hour</option>
-                                            <option value="1">1 hour</option>
-                                            <option value="2">2 hours</option>
-                                            <!-- Add more hour options as needed -->
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <select class="form-control" name="minutes" id="minutes">
-                                            <option value="0">0 minutes</option>
-                                            <option value="15">15 minutes</option>
-                                            <option value="30">30 minutes</option>
-                                            <option value="45" selected>45 minutes</option>
-                                            <!-- Add more minute options as needed -->
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Write Note</label>
-                                <textarea class="form-control" name="note" id="" cols="10" rows="5"
-                                    placeholder="Write Note For This Model Test"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- edit modal  --}}
         <div class="modal fade" id="editmodal">
@@ -137,8 +86,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Requests</h4>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#addclassmodal">+Requests</button>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

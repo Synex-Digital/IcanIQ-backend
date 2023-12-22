@@ -7,11 +7,9 @@ use App\Models\Admin;
 use App\Models\Attempt;
 use App\Models\ClassModel;
 use App\Models\Modeltest;
-use App\Models\Question;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 

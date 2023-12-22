@@ -15,7 +15,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $requests = Modeltest::all();
+        $requests = Modeltest::where('status', 1)->get();
         return view('backend.requests.index', [
             'requests' => $requests,
         ]);

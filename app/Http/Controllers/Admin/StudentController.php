@@ -19,7 +19,12 @@ class StudentController extends Controller
     {
         $classes = ClassModel::all();
         $requests = User::all();
-        return view('backend.student.index', compact('classes', 'requests'));
+        $today = date('Y-m-d');
+        return view('backend.student.index', [
+            'classes'   => $classes,
+            'requests'  => $requests,
+            'today'     => $today
+        ]);
     }
 
     /**
@@ -35,12 +40,12 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'name'      => 'required|max:255',
             'email'     => 'required|email',
             'number'    => 'required|min:11|numeric',
             'password'  => 'required|min:8',
+            'validity'  => 'required',
         ]);
 
         $image = $request->profile;
@@ -53,11 +58,11 @@ class StudentController extends Controller
         $id = User::count() == 0 ? User::count() : User::orderBy('id', 'DESC')->first()->id;
         $student_id = Carbon::now()->format('Ydm') . $id;
         User::insert([
-            // 'class_id' => $request->class_id,
             'student_id'    => $student_id,
             'name'          => $request->name,
             'email'         => $request->email,
             'number'        => $request->number,
+            'validity'      => $request->validity,
             'profile'       => $image_name,
             'password'      => bcrypt($request->password),
             'created_at'    => Carbon::now(),
@@ -81,6 +86,7 @@ class StudentController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'name'      => 'required|max:255',
             'email'     => 'required|email',
@@ -103,6 +109,7 @@ class StudentController extends Controller
                 'email'         => $request->email,
                 'number'        => $request->number,
                 'password'      => bcrypt($request->password),
+                'validity'      => $request->validity ? $student->validity : $request->validity,
                 'profile'       => $image_name,
                 'status'        => $request->status,
                 'created_at'    => Carbon::now(),
@@ -113,6 +120,7 @@ class StudentController extends Controller
                 'email'         => $request->email,
                 'number'        => $request->number,
                 'profile'       => $image_name,
+                'validity'      => $request->validity == null ? $student->validity : $request->validity,
                 'status'        => $request->status,
                 'created_at'    => Carbon::now(),
             ]);

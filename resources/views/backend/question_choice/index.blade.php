@@ -142,14 +142,16 @@
                                                 <div class="d-flex">
                                                     <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
                                                         value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
-                                                    <form action="{{ route('question.destroy', $request->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="btn btn-danger shadow btn-xs sharp"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
+                                                    @if (Auth::guard('admin')->user()->role == 'superadmin')
+                                                        <form action="{{ route('question.destroy', $request->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger shadow btn-xs sharp"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

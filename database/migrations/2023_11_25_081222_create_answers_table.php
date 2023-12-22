@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->integer('attempt_id');
-            $table->integer('student_id');
+            $table->integer('user_id');
             $table->integer('question_id');
             $table->integer('choice_id');
             $table->boolean('is_correct')->default(false);

@@ -36,6 +36,10 @@
                                     required>
                             </div>
                             <div class="form-group mb-3">
+                                <label class="form-label">User validity</label>
+                                <input type="date" class="form-control" name="validity" min="{{ $today }}">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label class="form-label">Password</label>
                                 <div class="position-relative">
                                     <input type="password" id="dz-password" class="form-control" value=""
@@ -87,6 +91,10 @@
                                 <label class="form-label">Student's Number</label>
                                 <input type="text" class="form-control" name="number" id="number"
                                     placeholder="Student's Number" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">User validity</label>
+                                <input type="date" class="form-control" name="validity" min="{{ $today }}">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Password</label>
@@ -145,6 +153,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Number</th>
+                                        <th>Validity</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -160,6 +169,9 @@
                                             <td>{{ $request->name }}</td>
                                             <td>{{ $request->email }}</td>
                                             <td>{{ $request->number }}</td>
+                                            <td><span
+                                                    class="badge badge-success">{{ $request->validity != null ? \Carbon\Carbon::parse($request->validity)->format('d M y') : 'nan' }}</span>
+                                            </td>
                                             <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }}</td>
                                             <td>
                                                 <div class="d-flex">

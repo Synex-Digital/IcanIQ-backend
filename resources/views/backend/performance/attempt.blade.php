@@ -14,79 +14,18 @@
         <div class="modal fade" id="addclassmodal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add New Question</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
-                    </div>
                     <div class="modal-body">
-                        <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label class="form-label">Select Modeltest</label>
-                                <select class="default-select  form-control wide" name="test_id">
-                                    {{-- <option value="{{ $modeltests->id }}" @readonly(true)>{{ $modeltests->title }} --}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Question</label>
-                                <input type="text" class="form-control" name="question_test_text"
-                                    placeholder="Write Question Here..">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Question Image</label>
-                                <input type="file" class="form-control" name="question_test_image">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Add Question</button>
-                            </div>
-                        </form>
+
+                        <div class="form-group mb-3">
+                            <h5 class="modal-title">In order to allow second attempt set status = "Done"</h5>
+                        </div>
+                        <a href="{{ route('performance.attempt.done', $model->id) }}" type="submit"
+                            class="btn btn-primary">Update</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- edit modal  --}}
-        <div class="modal fade" id="editmodal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Question</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('question.update', 'id') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="id" id="id">
-                            <input type="hidden" name="test_id" id="test_id">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Question</label>
-                                <input type="text" class="form-control" id="question_test_text" name="question_test_text"
-                                    placeholder="Write Question Here..">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Question Image</label>
-                                <input type="file" class="form-control" id="question_test_image"
-                                    name="question_test_image" placeholder="Write Question Here..">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="default-select  form-control wide" name="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Deactive</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="page-titles">
             <ol class="breadcrumb">
@@ -112,7 +51,7 @@
                     <div class="card-header">
                         <div></div>
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#addclassmodal">+Done</button>
+                            data-bs-target="#addclassmodal">Status</button>
                     </div>
 
                     <div class="card-body">
