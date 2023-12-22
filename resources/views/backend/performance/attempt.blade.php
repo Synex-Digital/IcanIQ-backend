@@ -108,17 +108,19 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    {{-- <div class="card-header">
-                        {{-- <h4 class="card-title">{{ $modeltests->title }}</h4>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                        data-bs-target="#addclassmodal">+Add Question</button>
-                </div> --}}
+
+                    <div class="card-header">
+                        <div></div>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#addclassmodal">+Done</button>
+                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example3" class="display" style="min-width: 850px">
                                 <thead>
                                     <tr>
-                                        <th>Model</th>
+                                        <th>Student</th>
                                         <th>Score</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -131,7 +133,7 @@
                                                 <span style="font-size: 13px;font-weight: 600;color: #817979;"> ID :
                                                     {{ $attempt->rel_user->student_id }}</span>
                                             </td>
-                                            <td> <span class="badge badge-success">{{ $attempt->result['wrong'] }} /
+                                            <td> <span class="badge badge-success">{{ $attempt->result['correct'] }} /
                                                     {{ $attempt->result['total'] }}</span>
                                                 <br>
                                                 <span class="badge badge-success">{{ $attempt->result['time_taken'] }}
@@ -147,9 +149,9 @@
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <button class="btn btn-warning shadow btn-xs sharp me-1 editbtn"
-                                                        value="{{ $attempt->id }}"><i
-                                                            class="fa fa-download"></i></button>
+                                                    <a href="{{ route('tests.show', $model->id) }}"
+                                                        class="btn btn-success shadow btn-xs sharp me-1"
+                                                        value="{{ $model->id }}"><i class="fa fa-download"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

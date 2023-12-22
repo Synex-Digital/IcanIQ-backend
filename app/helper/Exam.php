@@ -31,7 +31,7 @@ class Exam
                 'id'                    => $question->id,
                 'test_id'               => $question->test_id,
                 'question_test_text'    => $question->question_test_text,
-                'question_test_image'   => $question->question_test_image,
+                'question_test_image'   => $question->question_test_image != null ? asset('files/question/' . $question->question_test_image) : null,
                 'required'              => $question->required,
                 'status'                => $question->status,
                 'created_at'            => $question->created_at,
@@ -39,7 +39,7 @@ class Exam
                 'correct_id'            => null,
                 'wrong_id'              => null,
                 'is_correct'            => false,
-                // 'choices'               => $question->choices,
+                'choices'               => $question->choices,
             ];
 
             if ($userAnswers->has($question->id)) {
@@ -57,7 +57,6 @@ class Exam
         return $data;
     }
 
-
     //Giving The Result
     public static function GetResultCount($attemptId)
     {
@@ -67,9 +66,11 @@ class Exam
         // Count the total number of questions
         $totalQuestions = count($totalResultData);
 
+        $modelTime = Attempt::find($attemptId);
         // Add the 'total_questions' field to the result counts
         $correctAndWrongCounts['total'] = $totalQuestions;
         $correctAndWrongCounts['time_taken'] = self::ExamTime($attemptId);
+        $correctAndWrongCounts['exam_time'] = $modelTime ? $modelTime->model->exam_time : null;
 
         return $correctAndWrongCounts;
     }
@@ -98,6 +99,22 @@ class Exam
         return null;
     }
 
+    public static function calculateAverageTime($id): string
+    {
+        $examDurations = Attempt::where('model_id', $id)->whereNot('status', 'reject')->get();
+
+        $totalMinutes = 0;
+
+        foreach ($examDurations as $examTime) {
+            list($hours, $minutes, $seconds) = explode(':', $examTime);
+            $totalMinutes += $hours * 60 + $minutes + $seconds / 60;
+        }
+
+        $averageMinutes = $totalMinutes / count($examDurations);
+
+        return round($averageMinutes) . 'mn';
+    }
+
     //Counting result
     private static function CountCorrectAndWrongAnswers($data)
     {
@@ -115,6 +132,101 @@ class Exam
         return [
             'correct' => $correctCount,
             'wrong' => $wrongCount,
+        ];
+    }
+
+    // private static function TotalResultListItem($attempt_id)
+    // {
+    //     $attempt = Attempt::find($attempt_id);
+
+    //     $questions = Question::with('choices')->where('test_id', $attempt->model_id)->get();
+
+    //     $userAnswers = Answer::where('attempt_id', $attempt->id)->get()->keyBy('question_id');
+
+    //     $structuredData = collect();
+
+    //     foreach ($questions as $question) {
+
+    //         $correctChoice = null;
+
+    //         if ($question->choices->where('is_correct', 1)->count() != 0) {
+    //             $correctChoice = $question->choices->where('is_correct', 1)->first()->id;
+    //         }
+
+    //         $questionData = [
+    //             'id'                    => $question->id,
+    //             'test_id'               => $question->test_id,
+    //             'question_test_text'    => $question->question_test_text,
+    //             'question_test_image'   => $question->question_test_image != null ? asset('files/question/' . $question->question_test_image) : null,
+    //             'required'              => $question->required,
+    //             'status'                => $question->status,
+    //             'created_at'            => $question->created_at,
+    //             'updated_at'            => $question->updated_at,
+    //             'correct_id'            => null,
+    //             'wrong_id'              => null,
+    //             'is_correct'            => false,
+    //             'choices'               => $question->choices,
+    //         ];
+
+    //         if ($userAnswers->has($question->id)) {
+    //             $userAnswer = $userAnswers[$question->id]; //geting answered
+
+    //             $questionData['correct_id'] = $userAnswer->choice_id == $correctChoice ? $userAnswer->choice_id : null;
+    //             $questionData['wrong_id'] = $userAnswer->choice_id;
+    //             $questionData['is_correct'] = ($userAnswer->choice_id == $correctChoice);
+    //         }
+
+    //         $structuredData->push($questionData);
+    //     }
+    //     $data =  $structuredData->toArray();
+
+    //     return $data;
+    // }
+
+    public static function avarageInfo($id)
+    {
+        //need User ID
+        $data = Exam::GetResultCount($id);
+        $attempt = Attempt::select('id')->where('user_id', 1)->whereIn('status', ['result', 'done'])->get();
+
+        $totalTest = $attempt->count();
+
+        $avScore = null;
+        $avTime = null;
+
+        foreach ($attempt as $key => $value) {
+            $data = Exam::GetResultCount($value->id);
+            $value['x'] = $data;
+            $avScore += $data['correct'];
+            $timeTaken = $data['time_taken'];
+
+            if ($timeTaken) {
+                # code...
+                $timeParts = explode(':', $timeTaken);
+                $hours = (int)$timeParts[0];
+                $minutes = (int)$timeParts[1];
+                $seconds = (int)$timeParts[2];
+                $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+                $avTime += $totalSeconds;
+            }
+        }
+
+        $score = $avScore / $totalTest; //avarage score
+
+        $averageTimeSeconds = $avTime / $totalTest;
+
+        $averageHours = floor($averageTimeSeconds / 3600);
+        $averageMinutes = floor(($averageTimeSeconds % 3600) / 60);
+        $averageSeconds = $averageTimeSeconds % 60;
+
+        $averageTime = sprintf("%02d:%02d:%02d", $averageHours, $averageMinutes, $averageSeconds);
+
+
+        return [
+            'total_test' => $totalTest,
+            'av_score' => $score,
+            'av_time' => $averageTime,
         ];
     }
 }

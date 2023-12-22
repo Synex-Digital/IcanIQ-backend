@@ -170,7 +170,7 @@
             <div class="col-xl-9 col-xxl-8">
                 <div class="row">
 
-                    <div class="col-xl-8 col-xxl-12 col-lg-8">
+                    {{-- <div class="col-xl-8 col-xxl-12 col-lg-8">
                         <div class="card">
                             <div class="card-header border-0 pb-0">
                                 <h4 class="text-black fs-20 mb-0">Transactions Summary</h4>
@@ -226,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-xl-3 col-xxl-4">

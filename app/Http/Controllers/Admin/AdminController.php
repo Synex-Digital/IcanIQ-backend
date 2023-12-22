@@ -41,7 +41,7 @@ class AdminController extends Controller
         $admin = Admin::count();
         return view('backend.layouts.admin_login', [
             'admin' => $admin,
-            'ip' => $ip,
+            'ip'    => $ip,
         ]);
     }
     function admin_store(Request $request)

@@ -38,7 +38,7 @@ class AnswerController extends Controller
             $examTime = $currentTime->diff($attempt->end_quiz)->format('%H:%I:%S');
 
             if ($currentTime->gt($attempt->end_quiz)) {
-                $examTime = '00:00:00';
+                $examTime = null;
             }
 
             $question = Question::find($request->question_id);
@@ -50,26 +50,30 @@ class AnswerController extends Controller
             }
 
 
+            if ($examTime != null) {
+                $answer = null;
+                if (Answer::where('attempt_id', $attempt->id)->where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->exists()) {
+                    $answer = Answer::where('attempt_id', $attempt->id)->where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->first();
+                } else {
+                    $answer = new Answer();
+                    $answer->student_id     = Auth::user()->id;
+                    $answer->attempt_id     = $attempt->id;
+                }
+                $answer->question_id    = $request->question_id;
+                $answer->choice_id      = $request->choice_id;
+                $answer->is_correct     = $choice;
+                $answer->save();
 
-            $answer = null;
-            if (Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->exists()) {
-                $answer = Answer::where('student_id', Auth::user()->id)->where('question_id', $request->question_id)->first();
+                return response()->json([
+                    'status'        => 1,
+                    'data'          => $answer,
+                ]);
             } else {
-
-                $answer = new Answer();
-                $answer->student_id     = Auth::user()->id;
-                $answer->attempt_id     = $attempt->id;
+                return response()->json([
+                    'status'        => 0,
+                    'message'       => 'Exam time is over',
+                ]);
             }
-            $answer->question_id    = $request->question_id;
-            $answer->choice_id      = $request->choice_id;
-            $answer->is_correct     = $choice;
-            $answer->save();
-
-            return response()->json([
-                'status'        => 1,
-                'exam_time'     => $examTime,
-                'data'          => $answer,
-            ]);
         } else {
             return response()->json([
                 'status'    => 0,
@@ -101,6 +105,7 @@ class AnswerController extends Controller
 
             return response()->json([
                 'status'    => 1,
+                'exam_time' => 0,
                 'data'      => 'Done',
             ]);
         } else {

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\MailMarketing;
 use App\Models\Question;
 use App\Models\QuestionChoice;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class QuestionChoiceController extends Controller

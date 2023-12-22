@@ -9,6 +9,8 @@ class Modeltest extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     function class()
     {
         return $this->belongsTo(ClassModel::class, 'class_id');
@@ -20,5 +22,10 @@ class Modeltest extends Model
     public function attempt()
     {
         return $this->hasMany(Attempt::class, 'model_id');
+    }
+
+    public function attemptRequest()
+    {
+        return $this->hasMany(Attempt::class, 'model_id')->where('status', 'pending');
     }
 }

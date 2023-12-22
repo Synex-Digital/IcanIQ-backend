@@ -22,7 +22,7 @@ class ResultController extends Controller
             // $data['time_take'] =  Carbon::parse($data->start_quiz)->diffInMinutes(Carbon::parse($data->end_quiz));
             $data['questions'] = $data->model->questions->count();
             $data['exam_time'] = $data->model->exam_time;
-            $data['status'] = $data->status == 'result' ? true : false; // Loading for 1 : See For 2
+            $data['status'] = ($data->status == 'result' || $data->status == 'done') ? true : false; // Loading for 1 : See For 2
 
 
             unset($data['model']);
@@ -32,7 +32,6 @@ class ResultController extends Controller
             unset($data['start_quiz']);
             unset($data['end_quiz']);
             unset($data['user_notification']);
-            unset($data['created_at']);
             unset($data['updated_at']);
 
             return $data;
@@ -47,9 +46,14 @@ class ResultController extends Controller
         $attempt = Attempt::find($id);
         if ($attempt->status == 'result' || $attempt->status == 'done') {
             $data = Exam::TotalResultList($id);
+            $history = Exam::GetResultCount($id);
 
 
-            return response()->json($data);
+            return response()->json([
+                'status'    => 1,
+                'history'   => $history,
+                'data'      => $data,
+            ]);
         } else {
             return response()->json([
                 'status'    => 0,

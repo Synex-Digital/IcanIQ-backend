@@ -39,7 +39,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($models as $model)
+                                    @forelse ($models as $model)
                                         <tr>
                                             <td>{{ $model->title }}</td>
                                             <td><span class="badge badge-primary">{{ $model->count }}</span></td>
@@ -59,7 +59,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -8,6 +8,7 @@ use App\Models\Attempt;
 use App\Models\Modeltest;
 use App\Models\Question;
 use Carbon\Carbon;
+use Exam;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ModelTestController extends Controller
     function model(): JsonResponse
     {
         $modelTest = Modeltest::where('status', 1)->get();
-        $model = $modelTest->map(function ($data) {
+        foreach ($modelTest as $key => $data) {
             unset($data['status']);
             unset($data['updated_at']);
 
@@ -46,12 +47,45 @@ class ModelTestController extends Controller
 
             //Adding extra data
             $data['approval'] = $status;
-            return $data;
-        });
+            $data['index'] = $key + 1;
+            $data['total_question'] = $data->questions ? $data->questions->count() : 0;
+        }
+
+
+        // $model = $modelTest->map(function ($data) {
+        //     unset($data['status']);
+        //     unset($data['updated_at']);
+
+        //     //functions
+        //     $status = null;
+
+        //     if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->exists()) {
+
+        //         $attempt = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->id)->latest()->first(); //getting attempt data
+
+        //         if ($attempt->status == 'pending') {
+        //             $status = 2; //Pending button
+        //         } elseif ($attempt->status == 'accept') {
+        //             $status = 3; //Start button
+        //         } elseif ($attempt->status == 'result') {
+        //             $status = 4; //Completed button
+        //         } elseif ($attempt->status == 'reject') {
+        //             $status = 5; //Reject button
+        //         } else {
+        //             $status = 1; //Request button
+        //         }
+        //     } else {
+        //         $status = 1;
+        //     }
+
+        //     //Adding extra data
+        //     $data['approval'] = $status;
+        //     return $data;
+        // });
         return response()->json([
             'status' => 1,
             'total' => $modelTest->count(),
-            'modelTest' => $model,
+            'modelTest' => $modelTest,
         ], 200);
     }
 
@@ -108,7 +142,7 @@ class ModelTestController extends Controller
 
             $update = Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->first();
 
-            $examTime = null;
+            $examTime = 0;
 
             if ($update && $update->end_quiz == null) {
                 $minute = $update->model->exam_time;
@@ -118,15 +152,15 @@ class ModelTestController extends Controller
             } else {
             }
             $currentTime = Carbon::now();
-            $examTime = $currentTime->diff($update->end_quiz)->format('%H:%I:%S');
+            $examTime = $currentTime->diffInSeconds($update->end_quiz);
 
             if ($currentTime->gt($update->end_quiz)) {
-                $examTime = '00:00:00';
+                $examTime = 0;
             }
 
 
             $questionsUpdate = Question::with('choices')->where('test_id', $request->model_id)->where('status', 1)->get();
-            $questions = $questionsUpdate->map(function ($data) {
+            $questions = $questionsUpdate->map(function ($data, $index) {
                 // unset($data['test_id']);
                 unset($data['required']);
                 // unset($data['status']);
@@ -134,7 +168,7 @@ class ModelTestController extends Controller
                 unset($data['updated_at']);
 
 
-                // //Adding extra data
+                //Adding extra data
                 $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
 
                 $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
@@ -143,6 +177,7 @@ class ModelTestController extends Controller
                 $question = $answer ? true : false;
 
                 $data['exam_status'] = $question;
+                $data['index'] = $index + 1;
 
                 $choices = $data->choices;
                 foreach ($choices as &$choice) {
@@ -169,6 +204,29 @@ class ModelTestController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Someting is wrong with your Model Request, please contact with authority',
+            ]);
+        }
+    }
+
+    function performance(): JsonResponse
+    {
+        if (Auth::check()) {
+            $data = Exam::avarageInfo(Auth::user()->id);
+
+            if ($data) {
+                return response()->json([
+                    'status' => 1,
+                    'data'   => $data,
+                ]);
+            }
+            return response()->json([
+                'status' => 0,
+                'message'   => 'Contact with authority',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message'   => 'Contact with authority',
             ]);
         }
     }

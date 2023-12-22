@@ -11,9 +11,12 @@ class PerformanceController extends Controller
     function list()
     {
         $model = Modeltest::where('status', 1)->get();
-        foreach ($model as  $value) {
-            $attempt = Attempt::where('model_id', $value->id)->where('status', 'result')->get();
-            $value['count'] = $attempt->count();
+
+        if ($model->count() != 0) {
+            foreach ($model as  $value) {
+                $attempt = Attempt::where('model_id', $value->id)->where('status', 'result')->get();
+                $value['count'] = $attempt->count();
+            }
         }
 
         return view('backend.performance.index', [
@@ -30,6 +33,8 @@ class PerformanceController extends Controller
         foreach ($attempt as  $value) {
             $value['result'] = Exam::GetResultCount($value->id);
         }
+
+
 
         return view('backend.performance.attempt', [
             'attempts'  => $attempt,
