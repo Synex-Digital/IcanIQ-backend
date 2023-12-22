@@ -54,6 +54,5 @@ Route::middleware('admin')->group(function () {
     Route::post('/modeltest/soft/delete/{id}', [ModeltestController::class, 'modeltest_soft_delete'])->name('modeltest.soft.delete');
     Route::get('/performance', [PerformanceController::class, 'list'])->name('performance.list');
     Route::get('/performance/attempt/{id}', [PerformanceController::class, 'attempt_list'])->name('performance.list.attempt');
-    Route::get('/download/invoice/{id}', [TestController::class, 'download_invoice'])->name('download.invoice');
     Route::post('/getprints', [TestController::class, 'getprints'])->name('getprints');
 });
