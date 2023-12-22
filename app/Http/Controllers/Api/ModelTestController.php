@@ -8,6 +8,7 @@ use App\Models\Attempt;
 use App\Models\Modeltest;
 use App\Models\Question;
 use Carbon\Carbon;
+use Exam;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -203,6 +204,29 @@ class ModelTestController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Someting is wrong with your Model Request, please contact with authority',
+            ]);
+        }
+    }
+
+    function performance(): JsonResponse
+    {
+        if (Auth::check()) {
+            $data = Exam::avarageInfo(Auth::user()->id);
+
+            if ($data) {
+                return response()->json([
+                    'status' => 1,
+                    'data'   => $data,
+                ]);
+            }
+            return response()->json([
+                'status' => 0,
+                'message'   => 'Contact with authority',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message'   => 'Contact with authority',
             ]);
         }
     }

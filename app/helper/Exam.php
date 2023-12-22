@@ -182,4 +182,51 @@ class Exam
 
     //     return $data;
     // }
+
+    public static function avarageInfo($id)
+    {
+        //need User ID
+        $data = Exam::GetResultCount($id);
+        $attempt = Attempt::select('id')->where('user_id', 1)->whereIn('status', ['result', 'done'])->get();
+
+        $totalTest = $attempt->count();
+
+        $avScore = null;
+        $avTime = null;
+
+        foreach ($attempt as $key => $value) {
+            $data = Exam::GetResultCount($value->id);
+            $value['x'] = $data;
+            $avScore += $data['correct'];
+            $timeTaken = $data['time_taken'];
+
+            if ($timeTaken) {
+                # code...
+                $timeParts = explode(':', $timeTaken);
+                $hours = (int)$timeParts[0];
+                $minutes = (int)$timeParts[1];
+                $seconds = (int)$timeParts[2];
+                $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+                $avTime += $totalSeconds;
+            }
+        }
+
+        $score = $avScore / $totalTest; //avarage score
+
+        $averageTimeSeconds = $avTime / $totalTest;
+
+        $averageHours = floor($averageTimeSeconds / 3600);
+        $averageMinutes = floor(($averageTimeSeconds % 3600) / 60);
+        $averageSeconds = $averageTimeSeconds % 60;
+
+        $averageTime = sprintf("%02d:%02d:%02d", $averageHours, $averageMinutes, $averageSeconds);
+
+
+        return [
+            'total_test' => $totalTest,
+            'av_score' => $score,
+            'av_time' => $averageTime,
+        ];
+    }
 }
