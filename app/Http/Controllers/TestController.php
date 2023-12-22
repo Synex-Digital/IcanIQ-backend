@@ -41,9 +41,13 @@ class TestController extends Controller
     {
         $models = Modeltest::where('id', $id)->get();
         $questions = Question::with('choices')->where('test_id', $id)->get();
+        foreach ($questions as $question) {
+            $choices = $question->choices;
+        }
         return view('backend.test.index', [
             'questions'=>$questions,
             'models'=>$models,
+            'choices'=>$choices,
         ]);
     }
 
@@ -71,19 +75,4 @@ class TestController extends Controller
         //
     }
 
-    function download_invoice($id){
-        // $models = Modeltest::where('id', $id)->get();
-        // $questions = Question::with('choices')->where('test_id', $id)->get();
-        // $invoice = PDF::loadView('backend.test.invoice', [
-        //     'questions'=>$questions,
-        //     'models'=>$models,
-        // ]);
-        // return $invoice->download('result.pdf');
-        $models = Modeltest::where('id', $id)->get();
-        $questions = Question::with('choices')->where('test_id', $id)->get();
-        return view('backend.test.invoice', [
-            'questions'=>$questions,
-            'models'=>$models,
-        ]);
-    }
 }
