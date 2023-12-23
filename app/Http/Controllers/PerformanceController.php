@@ -41,4 +41,12 @@ class PerformanceController extends Controller
             'model'     => $model,
         ]);
     }
+    function attempt_done($id)
+    {
+        Attempt::where('model_id', $id)->where('status', 'result')->update([
+            'status' => 'done'
+        ]);
+
+        return back()->with('succ', 'Updated');
+    }
 }

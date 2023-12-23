@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="col-6">
                                         <select class="form-control" name="minutes" id="minutes">
-                                            <?php for ($i = 0; $i <= 60; $i += 1): ?>
+                                            <?php for ($i = 0; $i <= 59; $i += 1): ?>
                                             <option value="<?php echo $i; ?>"><?php echo $i === 0 ? '0' : $i; ?> minutes</option>
                                             <?php endfor; ?>
                                         </select>
@@ -82,11 +82,9 @@
                                     </div>
                                     <div class="col-6">
                                         <select class="form-control" name="minutes" id="minutes">
-                                            <option value="0">0 minutes</option>
-                                            <option value="15">15 minutes</option>
-                                            <option value="30">30 minutes</option>
-                                            <option value="45" selected>45 minutes</option>
-                                            <!-- Add more minute options as needed -->
+                                            <?php for ($i = 0; $i <= 59; $i += 1): ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i === 0 ? '0' : $i; ?> minutes</option>
+                                            <?php endfor; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -160,20 +158,24 @@
                                             </td>
                                             <td>{{ $request->exam_time }} <sup>MN</sup></td>
                                             <td>{{ $request->status == '1' ? 'Active' : 'Deactive' }} </td>
+
                                             <td>
                                                 <div class="d-flex">
                                                     <a href="{{ route('modeltest.show', $request->id) }}"
                                                         class="btn btn-success shadow btn-xs sharp me-1"
                                                         value="{{ $request->id }}"><i class="fa fa-eye"></i></a>
-                                                    <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn" value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
-                                                    <form action="{{ route('modeltest.soft.delete', $request->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="status" value="5">
-                                                        <button type="submit"
-                                                            class="btn btn-secondary shadow btn-xs sharp"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
+                                                    <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
+                                                        value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
+                                                    @if (Auth::guard('admin')->user()->role == 'superadmin')
+                                                        <form action="{{ route('modeltest.soft.delete', $request->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="status" value="5">
+                                                            <button type="submit"
+                                                                class="btn btn-secondary shadow btn-xs sharp"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

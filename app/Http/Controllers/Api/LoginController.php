@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,19 @@ class LoginController extends Controller
         $credentials = $request->only(['email', 'password']);
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            if ($user->validity !== null) {
+                $validityDateString = trim($user->validity);
+
+                // Adjust format to consider date and time (if present)
+                $validityDate = Carbon::createFromFormat('Y-m-d H:i:s', $validityDateString);
+
+                if ($validityDate !== false && $validityDate->isPast()) {
+                    return response()->json([
+                        'status' => 0,
+                        'user' => 'User validation expired',
+                    ], 200);
+                }
+            }
 
             $profile = $user->profile != null ? asset('files/student/' . $user->profile) : null;
             $user->profile = $profile;
