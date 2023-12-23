@@ -15,12 +15,13 @@ class ResultController extends Controller
 {
     function resultList()
     {
-        $data = Attempt::where('user_id', Auth::user()->id)->get();
+        $data = Attempt::where('user_id', Auth::user()->id)->whereNot('status', 'reject')->get();
         $attempt = $data->map(function ($data) {
 
             $data['model_name'] = $data->model->title;
             // $data['time_take'] =  Carbon::parse($data->start_quiz)->diffInMinutes(Carbon::parse($data->end_quiz));
             $data['questions'] = $data->model->questions->count();
+            $data['date'] = $data->created_at->format('d M y');
             $data['exam_time'] = $data->model->exam_time;
             $data['status'] = ($data->status == 'result' || $data->status == 'done') ? true : false; // Loading for 1 : See For 2
 

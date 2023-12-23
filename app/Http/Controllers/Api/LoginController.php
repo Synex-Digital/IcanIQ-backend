@@ -52,7 +52,7 @@ class LoginController extends Controller
 
             $profile = $user->profile != null ? asset('files/student/' . $user->profile) : null;
             $user->profile = $profile;
-            $user->date = $user->created_at->format('d-M-Y');
+            $user->date = $validityDate->format('d M y');
 
             $token = $user->createToken('userlogin')->accessToken;
 

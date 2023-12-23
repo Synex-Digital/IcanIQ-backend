@@ -225,7 +225,7 @@ class Exam
 
         return [
             'total_test' => $totalTest,
-            'av_score' => $score,
+            'av_score' => number_format($score, 2),
             'av_time' => $averageTime,
         ];
     }
