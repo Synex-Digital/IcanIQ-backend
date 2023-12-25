@@ -88,9 +88,9 @@
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="{{ route('tests.show', $model->id) }}"
+                                                    <a href="{{ route('tests.show', $attempt->id) }}"
                                                         class="btn btn-success shadow btn-xs sharp me-1"
-                                                        value="{{ $model->id }}"><i class="fa fa-download"></i></a>
+                                                        value="{{ $attempt->id }}"><i class="fa fa-download"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

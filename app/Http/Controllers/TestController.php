@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Modeltest;
 use App\Models\Question;
 use App\Models\QuestionChoice;
+use Exam;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -39,15 +40,14 @@ class TestController extends Controller
      */
     public function show(string $id)
     {
-        $models = Modeltest::where('id', $id)->get();
-        $questions = Question::with('choices')->where('test_id', $id)->get();
-        foreach ($questions as $question) {
-            $choices = $question->choices;
-        }
+
+        $data = Exam::TotalResultList($id);
+        $history = Exam::GetResultCount($id);
+
+
         return view('backend.test.index', [
-            'questions'=>$questions,
-            'models'=>$models,
-            'choices'=>$choices,
+            'questions' => $data,
+            'history' => $history,
         ]);
     }
 
@@ -74,5 +74,4 @@ class TestController extends Controller
     {
         //
     }
-
 }

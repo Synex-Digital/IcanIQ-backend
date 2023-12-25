@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Answer;
 use App\Models\Attempt;
-use App\Models\Question;
 use Carbon\Carbon;
 use Exam;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +19,7 @@ class ResultController extends Controller
             $data['model_name'] = $data->model->title;
             // $data['time_take'] =  Carbon::parse($data->start_quiz)->diffInMinutes(Carbon::parse($data->end_quiz));
             $data['questions'] = $data->model->questions->count();
-            $data['date'] = $data->created_at->format('d M y');
+            $data['date'] = $data->created_at->format('g:iA - d M y');
             $data['exam_time'] = $data->model->exam_time;
             $data['status'] = ($data->status == 'result' || $data->status == 'done') ? true : false; // Loading for 1 : See For 2
 
