@@ -7,7 +7,8 @@
                 <li class="breadcrumb-item active"><a href="#">Test</a></li>
             </ol>
             <div class="text-end">
-                <button onclick="printPage()" id="print" class=" btn btn-secondary text-white">Download</button>
+                <a href="{{ route('result.download', $id) }}" id="print"
+                    class=" btn btn-secondary text-white">Download</a>
             </div>
         </div>
         <!-- row -->
@@ -57,12 +58,3 @@ if (!$question['is_correct']) {
         </div>
     </div>
 @endsection
-<script>
-    function printPage() {
-        var printContent = document.getElementById("print_view").innerHTML;
-        var originalContent = document.body.innerHTML;
-        document.body.innerHTML = printContent;
-        window.print();
-        document.body.innerHTML = originalContent;
-    }
-</script>

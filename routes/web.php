@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\QuestionChoiceController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\RequestController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\TestController;
@@ -56,4 +57,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/performance/attempt/{id}', [PerformanceController::class, 'attempt_list'])->name('performance.list.attempt');
     Route::get('/performance/done/{id}', [PerformanceController::class, 'attempt_done'])->name('performance.attempt.done');
     Route::post('/getprints', [TestController::class, 'getprints'])->name('getprints');
+    Route::get('/result/download/{id}', [TestController::class, 'download'])->name('result.download');
+    Route::get('/result/list', [ResultController::class, 'result'])->name('admin.result.list');
 });

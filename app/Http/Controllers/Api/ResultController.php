@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attempt;
 use Carbon\Carbon;
 use Exam;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,5 +60,27 @@ class ResultController extends Controller
                 'message'   => 'Result not published',
             ]);
         }
+    }
+
+    function downloadPDF($id)
+    {
+        $question = Exam::TotalResultList($id);
+        $history = Exam::GetResultCount($id);
+        $model = Attempt::find($id);
+        $name = 'result-' . $model->created_at . '.pdf';
+
+        $pdf = PDF::loadView('pdf.result', [
+            'questions' => $question,
+            'history' => $history,
+            'model' => $model,
+        ]);
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->output();
+        }, $name, $headers);
     }
 }

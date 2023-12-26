@@ -3,10 +3,17 @@
     <div class="container-fluid">
         {{-- POP --}}
 
+        <div class="popover bs-popover-auto fade" role="tooltip" id="popover799385" data-popper-placement="top"
+            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(124px, -297px);">
+            <div class="popover-arrow" style="position: absolute; left: 0px; transform: translate(128px, 0px);"></div>
+            <h3 class="popover-header">Popover in Right</h3>
+            <div class="popover-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</div>
+        </div>
+
         <div class="page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('modeltest.index') }}">Performance</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.result.list') }}">Result</a></li>
             </ol>
         </div>
         @if ($errors->any())
@@ -22,44 +29,54 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"></h4>
-                        <a href="{{ route('admin.result.list') }}" type="button" class="btn btn-secondary">Result List</a>
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example3" class="display" style="min-width: 850px">
                                 <thead>
                                     <tr>
-                                        <th>Model</th>
-                                        <th>Participants</th>
+                                        <th>Student</th>
+                                        <th>Score</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($models as $model)
+                                    @foreach ($attempts as $attempt)
                                         <tr>
-                                            <td>{{ $model->title }}</td>
-                                            <td><span class="badge badge-primary">{{ $model->count }}</span></td>
+                                            <td>{{ $attempt->rel_user ? $attempt->rel_user->name : 'Unknown' }} <br>
+                                                <span style="font-size: 13px;font-weight: 600;color: #817979;"> ID :
+                                                    {{ $attempt->rel_user ? $attempt->rel_user->student_id : 'Unknown' }}</span>
+                                            </td>
+                                            <td> <span class="badge badge-success">{{ $attempt->result['correct'] }} /
+                                                    {{ $attempt->result['total'] }}</span>
+                                                <br>
+                                                <span class="badge badge-success">{{ $attempt->result['time_taken'] }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 <div class="d-flex align-items-center"><span
-                                                        class="badge badge-xs light badge-{{ $model->status != 0 ? 'success' : 'warning' }} mr-1">
-                                                        Result
+                                                        class="badge badge-xs light badge-{{ $attempt->status != 0 ? 'success' : 'warning' }} mr-1">
+                                                        {{ $attempt->status }}
                                                     </span>
                                                 </div>
                                             </td>
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="{{ route('performance.list.attempt', $model->id) }}"
+                                                    <a href="{{ route('tests.show', $attempt->id) }}"
                                                         class="btn btn-success shadow btn-xs sharp me-1"
-                                                        value="{{ $model->id }}"><i class="fa fa-eye"></i></a>
+                                                        value="{{ $attempt->id }}"><i class="fa fa-eye"></i>
+                                                    </a>
+                                                    @if ($attempt->rel_user)
+                                                        <a href="{{ route('result.download', $attempt->id) }}"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1"
+                                                            value="{{ $attempt->id }}"><i class="fa fa-download"></i></a>
+                                                    @endif
+
                                                 </div>
                                             </td>
                                         </tr>
-                                    @empty
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
