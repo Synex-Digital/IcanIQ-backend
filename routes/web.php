@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\QuestionChoiceController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\RequestController;
+use App\Http\Controllers\BannersController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PerformanceController;
@@ -45,6 +46,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('modeltest', ModeltestController::class);
     Route::resource('question', QuestionController::class);
     Route::resource('student', StudentController::class);
+    Route::resource('banner', BannersController::class);
     Route::resource('questionchoice', QuestionChoiceController::class);
     Route::resource('answer', AnswerController::class);
     Route::resource('panel-user', PanelUserController::class);

@@ -13,6 +13,12 @@
                     <li><a href="{{ route('panel-user.index') }}">Panel Users</a></li>
                 </ul>
             </li>
+            <li><a href="{{ route('banner.index') }}">
+                    <i class="flaticon-381-database-1"></i>
+                    <span class="nav-text">Banner
+                    </span>
+                </a>
+            </li>
             <li><a href="{{ route('student.index') }}">
                     <i class="flaticon-381-database-1"></i>
                     <span class="nav-text">Student

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Attempt;
+use App\Models\Banner;
 use App\Models\Modeltest;
 use App\Models\Question;
 use Carbon\Carbon;
@@ -212,10 +213,15 @@ class ModelTestController extends Controller
     {
         if (Auth::check()) {
             $data = Exam::avarageInfo(Auth::user()->id);
+            $banner = Banner::all();
+            foreach ($banner as $key => $value) {
+                $value['banner'] = asset('files/banner/' . $value->banner);
+            }
 
             if ($data) {
                 return response()->json([
                     'status' => 1,
+                    'banner'   => $banner,
                     'data'   => $data,
                 ]);
             }
