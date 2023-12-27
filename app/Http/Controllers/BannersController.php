@@ -36,7 +36,7 @@ class BannersController extends Controller
             'banner' => 'required|image|mimes:jpeg,png,jpg,webp'
         ]);
 
-        Photo::upload($request->banner, 'files/banner', 'BANNER', [851, 315]);
+        Photo::upload($request->banner, 'files/banner', 'BANNER', [851, 380]);
 
         $banner = new Banner();
         $banner->banner = Photo::$name;

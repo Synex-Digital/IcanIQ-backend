@@ -4,18 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Attempt;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 use Exam;
 
 
 class TestController extends Controller
 {
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-
         $data       = Exam::TotalResultList($id);
         $history    = Exam::GetResultCount($id);
 
+        if ($request->has('filter') && $request->filter != null) {
+            if ($request->filter == 'true') {
+                $data = array_filter($data, function ($item) {
+                    return $item['is_correct'] == true;
+                });
+            } elseif ($request->filter == 'false') {
+                $data = array_filter($data, function ($item) {
+                    return $item['is_correct'] == false;
+                });
+            }
+        }
 
         return view('backend.test.index', [
             'id' => $id,

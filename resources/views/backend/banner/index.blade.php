@@ -16,6 +16,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Banner</label>
                                 <input type="file" class="form-control" name="banner">
+                                <span style="color: #639ac3; font-size: 12px;">Image size: w-851, h-315</span>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Add Banner</button>

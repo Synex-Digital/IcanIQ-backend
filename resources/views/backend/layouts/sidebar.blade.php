@@ -14,7 +14,8 @@
                 </ul>
             </li>
             <li><a href="{{ route('banner.index') }}">
-                    <i class="flaticon-381-database-1"></i>
+
+                    <i class="flaticon-381-archive"></i>
                     <span class="nav-text">Banner
                     </span>
                 </a>

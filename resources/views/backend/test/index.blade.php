@@ -11,6 +11,22 @@
                     class=" btn btn-secondary text-white">Download</a>
             </div>
         </div>
+        <div class="row px-3">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get">
+                        <div class="col-12 col-md-8 d-flex gap-4">
+                            <select class="form-control" name="filter" id="">
+                                <option value="">All</option>
+                                <option value="true">Correct Answer</option>
+                                <option value="false">Wrong Answer</option>
+                            </select>
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- row -->
         <div class="row" id="print_view">
             <div class="col-12">

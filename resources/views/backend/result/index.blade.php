@@ -35,6 +35,7 @@
                                 <thead>
                                     <tr>
                                         <th>Student</th>
+                                        <th>Model</th>
                                         <th>Score</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -46,6 +47,9 @@
                                             <td>{{ $attempt->rel_user ? $attempt->rel_user->name : 'Unknown' }} <br>
                                                 <span style="font-size: 13px;font-weight: 600;color: #817979;"> ID :
                                                     {{ $attempt->rel_user ? $attempt->rel_user->student_id : 'Unknown' }}</span>
+                                            </td>
+                                            <td>
+                                                {{ $attempt->model ? $attempt->model->title : 'Unknown' }}
                                             </td>
                                             <td> <span class="badge badge-success">{{ $attempt->result['correct'] }} /
                                                     {{ $attempt->result['total'] }}</span>
