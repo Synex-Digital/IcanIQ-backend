@@ -235,7 +235,10 @@ class Exam
         } catch (\Exception $e) {
             // Handle the exception here, you can log the error or return a specific response.
             return [
-                'error' => $e->getMessage(),
+                'total_test' => 0,
+                'av_score'  => 0,
+                'av_time'   => 0,
+                'error'     => $e->getMessage(),
             ];
         }
         // $attempt = Attempt::select('id')->where('user_id', $id)->whereIn('status', ['result', 'done'])->get();
