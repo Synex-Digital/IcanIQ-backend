@@ -174,7 +174,7 @@ class ModelTestController extends Controller
 
                 $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
 
-                $answer = Answer::where('attempt_id', $attemptID)->where('question_id', $data->id)->first();
+                $answer = Answer::where('attempt_id', $attemptID)->where('student_id', Auth::user()->id)->where('question_id', $data->id)->first();
                 $question = $answer ? true : false;
 
                 $data['exam_status'] = $question;
