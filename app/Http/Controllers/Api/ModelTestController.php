@@ -225,14 +225,16 @@ class ModelTestController extends Controller
             if ($data) {
                 return response()->json([
                     'status' => 1,
-                    'banner'   => $banner,
+                    'banner' => $banner,
                     'data'   => $data,
                 ]);
+            } else {
+                return response()->json([
+                    'status'    => 0,
+                    'banner'    => $banner,
+                    'message'   => 'Contact with authority',
+                ]);
             }
-            return response()->json([
-                'status' => 0,
-                'message'   => 'Contact with authority',
-            ]);
         } else {
             return response()->json([
                 'status' => 0,
