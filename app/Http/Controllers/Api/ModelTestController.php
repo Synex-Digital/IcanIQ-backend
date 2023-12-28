@@ -172,9 +172,13 @@ class ModelTestController extends Controller
                 //Adding extra data
                 $data['question_test_image'] = $data['question_test_image'] != null ? asset('files/question/' . $data['question_test_image']) : null;
 
-                $attemptID = Attempt::where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
+                $attemptID = Attempt::where('user_id', Auth::user()->id)->where('model_id', $data->test_id)->where('status', 'accept')->first()->id;
 
-                $answer = Answer::where('attempt_id', $attemptID)->where('student_id', Auth::user()->id)->where('question_id', $data->id)->first();
+                $answer = Answer::where('attempt_id', $attemptID)
+                    ->where('student_id', Auth::user()->id)
+                    ->where('question_id', $data->id)
+                    ->first();
+
                 $question = $answer ? true : false;
 
                 $data['exam_status'] = $question;
