@@ -94,8 +94,8 @@ class ModelTestController extends Controller
     {
 
         if (Modeltest::find($id)) {
-            $time = Carbon::now()->subHour(2);
-            $model = Attempt::where('model_id', $id)
+            // $time = Carbon::now()->subHour(2);
+            $model = Attempt::where('user_id', Auth::user()->id)->where('model_id', $id)
                 ->whereIn('status', ['pending', 'accept', 'result'])
                 ->get();
 

@@ -186,8 +186,8 @@ class Exam
     public static function avarageInfo($id)
     {
         //need User ID
-        $data = Exam::GetResultCount($id);
-        $attempt = Attempt::select('id')->where('user_id', 1)->whereIn('status', ['result', 'done'])->get();
+        //  $data = Exam::GetResultCount($id);
+        $attempt = Attempt::select('id')->where('user_id', $id)->whereIn('status', ['result', 'done'])->get();
 
         $totalTest = $attempt->count();
 

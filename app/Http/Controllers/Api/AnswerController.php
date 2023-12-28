@@ -26,7 +26,7 @@ class AnswerController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => $validator->errors()->messages(),
-            ], 400);
+            ], 200);
         }
 
         if (Attempt::where('user_id', Auth::user()->id)->where('model_id', $request->model_id)->where('status', 'accept')->exists()) {
