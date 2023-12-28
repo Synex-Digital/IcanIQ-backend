@@ -185,48 +185,99 @@ class Exam
 
     public static function avarageInfo($id)
     {
-        //need User ID
-        //  $data = Exam::GetResultCount($id);
-        $attempt = Attempt::select('id')->where('user_id', $id)->whereIn('status', ['result', 'done'])->get();
+        try {
+            $attempts = Attempt::select('id')
+                ->where('user_id', $id)
+                ->whereIn('status', ['result', 'done'])
+                ->get();
 
-        $totalTest = $attempt->count();
+            $totalTest = $attempts->count();
 
-        $avScore = null;
-        $avTime = null;
-
-        foreach ($attempt as $key => $value) {
-            $data = Exam::GetResultCount($value->id);
-            $value['x'] = $data;
-            $avScore += $data['correct'];
-            $timeTaken = $data['time_taken'];
-
-            if ($timeTaken) {
-                # code...
-                $timeParts = explode(':', $timeTaken);
-                $hours = (int)$timeParts[0];
-                $minutes = (int)$timeParts[1];
-                $seconds = (int)$timeParts[2];
-                $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
-
-                $avTime += $totalSeconds;
+            if ($totalTest === 0) {
+                throw new \Exception("No test data available for this user.");
             }
+
+            $avScore = null;
+            $avTime = null;
+
+            foreach ($attempts as $key => $attempt) {
+                $data = Exam::GetResultCount($attempt->id);
+                $attempt['x'] = $data;
+                $avScore += $data['correct'];
+                $timeTaken = $data['time_taken'];
+
+                if ($timeTaken) {
+                    $timeParts = explode(':', $timeTaken);
+                    $hours = (int)$timeParts[0];
+                    $minutes = (int)$timeParts[1];
+                    $seconds = (int)$timeParts[2];
+                    $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+                    $avTime += $totalSeconds;
+                }
+            }
+
+            $score = $avScore / $totalTest; // average score
+
+            $averageTimeSeconds = $avTime / $totalTest;
+
+            $averageHours = floor($averageTimeSeconds / 3600);
+            $averageMinutes = floor(($averageTimeSeconds % 3600) / 60);
+            $averageSeconds = $averageTimeSeconds % 60;
+
+            $averageTime = sprintf("%02d:%02d:%02d", $averageHours, $averageMinutes, $averageSeconds);
+
+            return [
+                'total_test' => $totalTest,
+                'av_score' => number_format($score, 2),
+                'av_time' => $averageTime,
+            ];
+        } catch (\Exception $e) {
+            // Handle the exception here, you can log the error or return a specific response.
+            return [
+                'error' => $e->getMessage(),
+            ];
         }
+        // $attempt = Attempt::select('id')->where('user_id', $id)->whereIn('status', ['result', 'done'])->get();
 
-        $score = $avScore / $totalTest; //avarage score
+        // $totalTest = $attempt->count();
 
-        $averageTimeSeconds = $avTime / $totalTest;
+        // $avScore = null;
+        // $avTime = null;
 
-        $averageHours = floor($averageTimeSeconds / 3600);
-        $averageMinutes = floor(($averageTimeSeconds % 3600) / 60);
-        $averageSeconds = $averageTimeSeconds % 60;
+        // foreach ($attempt as $key => $value) {
+        //     $data = Exam::GetResultCount($value->id);
+        //     $value['x'] = $data;
+        //     $avScore += $data['correct'];
+        //     $timeTaken = $data['time_taken'];
 
-        $averageTime = sprintf("%02d:%02d:%02d", $averageHours, $averageMinutes, $averageSeconds);
+        //     if ($timeTaken) {
+        //         # code...
+        //         $timeParts = explode(':', $timeTaken);
+        //         $hours = (int)$timeParts[0];
+        //         $minutes = (int)$timeParts[1];
+        //         $seconds = (int)$timeParts[2];
+        //         $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+        //         $avTime += $totalSeconds;
+        //     }
+        // }
+
+        // $score = $avScore / $totalTest; //avarage score
+
+        // $averageTimeSeconds = $avTime / $totalTest;
+
+        // $averageHours = floor($averageTimeSeconds / 3600);
+        // $averageMinutes = floor(($averageTimeSeconds % 3600) / 60);
+        // $averageSeconds = $averageTimeSeconds % 60;
+
+        // $averageTime = sprintf("%02d:%02d:%02d", $averageHours, $averageMinutes, $averageSeconds);
 
 
-        return [
-            'total_test' => $totalTest,
-            'av_score' => number_format($score, 2),
-            'av_time' => $averageTime,
-        ];
+        // return [
+        //     'total_test' => $totalTest,
+        //     'av_score' => number_format($score, 2),
+        //     'av_time' => $averageTime,
+        // ];
     }
 }
