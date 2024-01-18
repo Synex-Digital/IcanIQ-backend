@@ -37,6 +37,7 @@
                                         <th>Student</th>
                                         <th>Model</th>
                                         <th>Score</th>
+                                        <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -56,6 +57,10 @@
                                                 <br>
                                                 <span class="badge badge-success">{{ $attempt->result['time_taken'] }}
                                                 </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge badge-success">{{ $attempt->formatted_created_at }}</span>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center"><span
