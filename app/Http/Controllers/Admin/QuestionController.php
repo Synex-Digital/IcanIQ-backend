@@ -128,6 +128,9 @@ class QuestionController extends Controller
     public function destroy(string $id)
     {
         $Questionimg = Question::find($id);
+
+        $Questionimg->choices()->delete();
+
         if ($Questionimg->question_test_image != null) {
             Photo::delete('files/question/', $Questionimg->question_test_image);
         }

@@ -29,9 +29,6 @@ class ModeltestController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,9 +47,6 @@ class ModeltestController extends Controller
         return back()->with('succ', 'Model Test Added...');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $requests = Question::where('test_id', $id)->get();
@@ -60,18 +54,13 @@ class ModeltestController extends Controller
         return view('backend.question.index', compact('requests', 'modeltests'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $modeltest = Modeltest::find($id);
         return $modeltest;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -90,13 +79,10 @@ class ModeltestController extends Controller
         return back()->with('succ', 'Model Test Updated...');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function modeltest_soft_delete(Request $request, string $id)
     {
         Modeltest::find($id)->update([
-            'status'=>$request->status,
+            'status'=> 5,
         ]);
         return back()->with('succ', 'Class Deleted...');
     }

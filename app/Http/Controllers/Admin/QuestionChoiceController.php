@@ -103,8 +103,9 @@ class QuestionChoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        QuestionChoice::find($id)->delete();
+        return back();
     }
 }

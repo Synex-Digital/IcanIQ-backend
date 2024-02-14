@@ -45,8 +45,6 @@
             </div>
         </div>
 
-
-
         {{-- edit modal  --}}
         <div class="modal fade" id="editmodal">
             <div class="modal-dialog" role="document">
@@ -88,8 +86,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="page-titles">
             <ol class="breadcrumb">
@@ -143,7 +139,7 @@
                                                     <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
                                                         value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
                                                     @if (Auth::guard('admin')->user()->role == 'superadmin')
-                                                        <form action="{{ route('question.destroy', $request->id) }}"
+                                                        <form action="{{ route('questionchoice.destroy', $request->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
