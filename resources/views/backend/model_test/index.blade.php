@@ -167,15 +167,38 @@
                                                     <button class="btn btn-primary shadow btn-xs sharp me-1 editbtn"
                                                         value="{{ $request->id }}"><i class="fa fa-pencil"></i></button>
                                                     @if (Auth::guard('admin')->user()->role == 'superadmin')
-                                                        <form action="{{ route('modeltest.soft.delete', $request->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="status" value="5">
-                                                            <button type="submit"
-                                                                class="btn btn-secondary shadow btn-xs sharp"><i
-                                                                    class="fa fa-trash"></i></button>
-                                                        </form>
+                                                        <button type="submit" class="btn btn-secondary shadow btn-xs sharp delete" data-bs-toggle="modal" data-bs-target="#basicModal"
+                                                        data-user-id="{{ route('modeltest.soft.delete', $request->id) }}"><i class="fa fa-trash"></i></button>
                                                     @endif
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="basicModal">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form id="deleteID" action="" method="POST">
+                                                                @csrf
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Delete model</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">Are you sure you want to delete
+                                                                        this model? This action cannot be undone.
+
+                                                                        <input type="hidden" id="modelStatus" name="status" value="5">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-danger light"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -209,6 +232,16 @@
                     }
                 });
             })
+            $('.delete').on('click', function(e) {
+                e.preventDefault(); // Prevent the default action
+
+                var userId = $(this).data('user-id');
+
+                $('#modelStatus').val(userId);
+                $('#deleteID').attr('action', userId);
+            });
         })
+
+
     </script>
 @endsection

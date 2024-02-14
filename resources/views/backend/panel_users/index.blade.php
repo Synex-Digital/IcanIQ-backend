@@ -161,8 +161,13 @@
                                     @foreach ($panelusers as $paneluser)
                                         <tr>
                                             <td>
+                                                @if ($paneluser->profile)
                                                 <img style="width: 50px;"
                                                     src="{{ asset('files/panelusers/' . $paneluser->profile) }}">
+
+                                                @else
+                                                    <img width="50px" src="{{ Avatar::create($paneluser->name)->toBase64() }}" />
+                                                @endif
                                             </td>
                                             <td>{{ $paneluser->name }}</td>
                                             <td>{{ $paneluser->email }}</td>
