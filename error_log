@@ -1,0 +1,85 @@
+[21-Dec-2023 21:46:04 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:46:04 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:46:04 UTC] PHP Warning:  require(/home/icanrhkp/laraveladmin.icaniqbd.com/vendor/autoload.php): Failed to open stream: No such file or directory in /home/icanrhkp/laraveladmin.icaniqbd.com/artisan on line 18
+[21-Dec-2023 21:46:04 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/icanrhkp/laraveladmin.icaniqbd.com/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/icanrhkp/laraveladmin.icaniqbd.com/artisan:18
+Stack trace:
+#0 {main}
+  thrown in /home/icanrhkp/laraveladmin.icaniqbd.com/artisan on line 18
+[21-Dec-2023 21:47:14 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:14 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:30 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:30 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:31 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:31 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:43 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[21-Dec-2023 21:47:43 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 04:56:48 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 04:56:48 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 06:01:32 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 06:01:32 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 10:52:48 UTC] PHP Warning:  PHP Startup: apcu: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
+[22-Dec-2023 10:52:48 UTC] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20220830
+PHP    compiled with module API=20230831
+These options need to match
+ in Unknown on line 0
