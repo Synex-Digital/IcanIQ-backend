@@ -79,7 +79,7 @@
                                 @csrf
                                 <input type="hidden" name="model_id" value="{{ $attempt->first()->model_id }}">
                                 <button type="submit" name="btn" value="1" class="btn btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#addclassmodal">+Done</button>
+                                    data-bs-toggle="modal" data-bs-target="#addclassmodal">+Accept</button>
                                 <button type="submit" name="btn" value="2" class="btn btn-secondary"
                                     data-bs-toggle="modal" data-bs-target="#addclassmodal">+Reject</button>
                             </form>
